@@ -71,7 +71,7 @@ class FrontController{
 
 
     public function showHome(){
-        $display = new Pages();
+        
         $tpl = new Template( 'src/view/frontend/' );
         print $tpl->render( 'pageView', array(
             'basedir' => $_SESSION['basedir'],
