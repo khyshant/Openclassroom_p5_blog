@@ -88,7 +88,23 @@ class AdminController
         }
     }
 
-    
+    /**
+     * @param $id
+     */
+    public function dispatchUser($id)
+    {
+        if (!isset($_SESSION['adminUser'])) {
+            $this->controlAccess();
+        } else {
+            $user = new Users;
+            $user = $user->DisplayUsersList('array');
+            if (isset($user[$id])) {
+                $this->user($id);
+            } else {
+                RouterException::routeMatchesName();
+            }
+        }
+    }
 
 
     /**
