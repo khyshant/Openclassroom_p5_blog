@@ -4,7 +4,7 @@
 
     <title>test css</title>
     <link rel='shortcut icon' href='favicon.ico' type='image/x-icon' />
-    <link rel="stylesheet" type="text/css" href="<?php echo htmlentities($basedir) ; ?>public/css/base.css" />
+<link rel="stylesheet" type="text/css" href="<?php echo htmlentities($basedir) ; ?>public/css/base.css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
   <meta charset="utf-8">
@@ -81,13 +81,30 @@
     </a>
 </div>
     <section class="col-md-6 offset-md-6">
-        <h1 class="col-md-12 text-center"><?php echo htmlentities($title); ?></h1>
-        <div id="scene" class="col-md-12"><?php echo htmlentities($title); ?></div>
+        <h1 class="col-md-12 text-center"><?php echo $title; ?></h1>
         <article id="contenu" class="col-md-12">
-            <?php echo htmlentities($title); ?>
-            <?php echo htmlentities($menu['page1']); ?>
-        </article>
+            <?php
+                if(isset($add_a_page))
+                {
+            ?>
+                <a href="<?php echo  htmlentities($add_a_page); ?>" class="pull-right btn btn-primary" >Ajouter une page</a>
+            <?php
+                ;}
+            ?>
+            <?php
+                if(isset($add_a_post))
+                {
+            ?>
+                <a href="<?php echo  htmlentities($add_a_post); ?>" class="pull-right btn btn-primary" >Ajouter un billet</a>
+            <?php
+                ;}
+            ?>
+            <p class="content">
+                <?php echo  $contenu; ?>
+            </p>
 
+        </article>
+       
         
     </section>
     <button id="openNav" class="d-block"><i class="fa fa-eye"></i></button>
@@ -147,7 +164,7 @@
     //    })
     }
     function myFunction() {
-        var x = document.getElementById("myTopnav");
+        const x = document.getElementById("myTopnav");
         if (x.className === "topnav") {
             x.className += " responsive";
         } else {

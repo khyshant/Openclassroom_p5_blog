@@ -4,7 +4,7 @@
 
     <title>test css</title>
     <link rel='shortcut icon' href='favicon.ico' type='image/x-icon' />
-    <link rel="stylesheet" type="text/css" href="<?php echo htmlentities($basedir) ; ?>public/css/base.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo $basedir ; ?>public/css/base.css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
   <meta charset="utf-8">
@@ -14,11 +14,11 @@
 </head>
 <body>
 <nav  id="myTopnav" class="topnav ">
-    <a  href="<?php echo htmlentities($menu['lien1']); ?>"><?php echo htmlentities($menu['page1']); ?></a>
-    <a  href="<?php echo htmlentities($menu['lien2']); ?>"><?php echo htmlentities($menu['page2']); ?></a>
-    <a  href="<?php echo htmlentities($menu['lien3']); ?>"><?php echo htmlentities($menu['page3']); ?></a>
-    <a  href="<?php echo htmlentities($menu['lien4']); ?>"><?php echo htmlentities($menu['page4']); ?></a>
-    <a  href="<?php echo htmlentities($menu['lien5']); ?>"><?php echo htmlentities($menu['page5']); ?></a>
+    <a  href="<?php echo $basedir.$menu['lien1']; ?>"><?php echo $menu['page1']; ?></a>
+    <a  href="<?php echo $basedir.$menu['lien2']; ?>"><?php echo $menu['page2']; ?></a>
+    <a  href="<?php echo $basedir.$menu['lien3']; ?>"><?php echo $menu['page3']; ?></a>
+    <a  href="<?php echo $basedir.$menu['lien4']; ?>"><?php echo $menu['page4']; ?></a>
+    <a  href="<?php echo $basedir.$menu['lien5']; ?>"><?php echo $menu['page5']; ?></a>
     <a href="javascript:void(0);" class="icon" onclick="myFunction()">
         <i class="fa fa-bars"></i>
     </a>
@@ -29,65 +29,64 @@
     </div>
     <div id="pg2" class="pg_item pg_item_bg_2">
     </div>
-    <a href="<?php echo htmlentities($menu['lien1']); ?>" id="pg3" class="pg_item pg_item_bg_3">
+    <a href="<?php echo $basedir.$menu['lien1']; ?>" id="pg3" class="pg_item pg_item_bg_3">
         <div class="pg_mask">
             <div href="#" class="inner-wrap">
                 <div class="pg_item-content pg_item-inner">
-                    <h4> <?php echo htmlentities($menu['page1']); ?></h4>
-                    <span></span>
+                    <h4> <?php echo $menu['page1']; ?></h4>
+                    <span>accroche</span>
                 </div>
             </div>
         </div>
     </a>
-    <a href="<?php echo htmlentities($menu['lien2']) ?>" id="pg4" class="pg_item pg_item_bg_4">
+    <a href="<?php echo $basedir.$menu['lien2'] ?>" id="pg4" class="pg_item pg_item_bg_4">
         <div class="pg_mask">
             <div href="#" class="inner-wrap">
                 <div class="pg_item-content pg_item-inner">
-                    <h4> <?php echo htmlentities($menu['page2']); ?></h4>
-                    <span></span>
+                    <h4> <?php echo $menu['page2']; ?></h4>
+                    <span>accroche</span>
                 </div>
             </div>
         </div>
     </a>
-    <a href="<?php echo htmlentities($menu['lien3']); ?>" id="pg5" class="pg_item pg_item_bg_5">
+    <a href="<?php echo $basedir.$menu['lien3']; ?>" id="pg5" class="pg_item pg_item_bg_5">
         <div class="pg_mask">
             <div href="#" class="inner-wrap">
                 <div class="pg_item-content pg_item-inner">
-                    <h4> <?php echo htmlentities($menu['page3']); ?></h4>
-                    <span></span>
+                    <h4> <?php echo $menu['page3']; ?></h4>
+                    <span>accroche</span>
                 </div>
             </div>
         </div>
     </a>
-    <a href="<?php echo $menu['lien4']; ?>" id="pg6" class="pg_item pg_item_bg_6">
+    <a href="<?php echo $basedir.$menu['lien4']; ?>" id="pg6" class="pg_item pg_item_bg_6">
         <div class="pg_mask">
             <div href="#" class="inner-wrap">
                 <div class="pg_item-content pg_item-inner">
-                    <h4> <?php echo htmlentities($menu['page4']); ?></h4>
-                    <span></span>
+                    <h4> <?php echo $menu['page4']; ?></h4>
+                    <span>accroche</span>
                 </div>
             </div>
         </div>
     </a>
-    <a href="<?php echo htmlentities($menu['lien5']); ?>" id="pg7" class="pg_item pg_item_bg_7">
+    <a href="<?php echo $basedir.$menu['lien5']; ?>" id="pg7" class="pg_item pg_item_bg_7">
         <div class="pg_mask">
             <div href="#" class="inner-wrap">
                 <div class="pg_item-content pg_item-inner">
-                    <h4> <?php echo htmlentities($menu['page5']); ?></h4>
-                    <span></span>
+                    <h4> <?php echo $menu['page5']; ?></h4>
+                    <span>accroche</span>
                 </div>
             </div>
         </div>
     </a>
 </div>
     <section class="col-md-6 offset-md-6">
-        <h1 class="col-md-12 text-center"><?php echo htmlentities($title); ?></h1>
-        <div id="scene" class="col-md-12"><?php echo htmlentities($title); ?></div>
+        <h1 class="col-md-12 text-center"><?php echo $title; ?></h1>
+        <div id="scene" class="col-md-12"><?php echo $title; ?></div>
         <article id="contenu" class="col-md-12">
-            <?php echo htmlentities($title); ?>
-            <?php echo htmlentities($menu['page1']); ?>
+            <?php echo $title; ?>
         </article>
-
+       
         
     </section>
     <button id="openNav" class="d-block"><i class="fa fa-eye"></i></button>

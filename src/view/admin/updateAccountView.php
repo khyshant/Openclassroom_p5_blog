@@ -1,10 +1,11 @@
+
 <!doctype html>
 <html lang="fr">
 <head>
 
     <title>test css</title>
     <link rel='shortcut icon' href='favicon.ico' type='image/x-icon' />
-    <link rel="stylesheet" type="text/css" href="<?php echo htmlentities($basedir) ; ?>public/css/base.css" />
+<link rel="stylesheet" type="text/css" href="<?php echo htmlentities($basedir) ; ?>public/css/base.css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
   <meta charset="utf-8">
@@ -81,13 +82,18 @@
     </a>
 </div>
     <section class="col-md-6 offset-md-6">
-        <h1 class="col-md-12 text-center"><?php echo htmlentities($title); ?></h1>
-        <div id="scene" class="col-md-12"><?php echo htmlentities($title); ?></div>
-        <article id="contenu" class="col-md-12">
-            <?php echo htmlentities($title); ?>
-            <?php echo htmlentities($menu['page1']); ?>
-        </article>
+        <h1 class="col-md-12 text-center"><?php echo $title; ?></h1>
+        <h2>Modification de : <?php echo $contenu['firstname'].' '.$contenu['lastname']; ?></h2>
+        <form id="test" method="post" action="../updateUser">
+             <div class="form-group">
+                 <label for="comment_auth">authorisé</label>
+                 <input type="checkbox"  id="comment_auth" name="comment_auth" >
+             </div>
+            <input type="hidden" id="idu" name="idu" value="<?php echo $contenu['id']; ?>"/>
+             <button type="submit" id="submit" name="submit" class="btn btn-primary" >Enregistrez vous</button>
+         </form>
 
+       
         
     </section>
     <button id="openNav" class="d-block"><i class="fa fa-eye"></i></button>
@@ -108,52 +114,9 @@
             $("#openNav").addClass("d-block");
             $("#openNav").removeClass("d-none");
         });
-    });  
-    
-	function openNav() {
-        //    $("#pg1").slideDown("slow", function(){
-        //        $("#pg2").slideDown("slow", function(){
-                    $("#pg3").slideDown("slow", function(){
-                        $("#pg4").slideDown("slow", function(){
-                            $("#pg5").slideDown("slow", function(){
-                                $("#pg6").slideDown("slow", function(){
-                                    $("#pg7").slideDown("slow", function(){
-                                        $("#pg8").slideDown("slow", function(){
-                                        })
-                                    })
-                                })
-                            })
-                        })
-                    })
-        //        })
-        //    })
-        }
-    function closeNav() {
-    //    $("#pg1").slideUp("slow", function(){
-    //        $("#pg2").slideUp("slow", function(){
-                $("#pg3").slideUp("slow", function(){
-                    $("#pg4").slideUp("slow", function(){
-                        $("#pg5").slideUp("slow", function(){
-                            $("#pg6").slideUp("slow", function(){
-                                $("#pg7").slideUp("slow", function(){
-                                    $("#pg8").slideUp("slow", function(){
-                                    })
-                                })
-                            })
-                        })
-                    })
-                })
-    //        })
-    //    })
-    }
-    function myFunction() {
-        var x = document.getElementById("myTopnav");
-        if (x.className === "topnav") {
-            x.className += " responsive";
-        } else {
-            x.className = "topnav";
-        }
-    }
+    });
+
   </script>
+<script type="text/javascript" src="<?php echo $basedir ; ?>public/js/base.js"></script>
 </body>
 </html>

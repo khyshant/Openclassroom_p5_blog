@@ -1,16 +1,25 @@
 <!doctype html>
 <html lang="fr">
 <head>
-
+    <meta charset="utf-8">
     <title>test css</title>
     <link rel='shortcut icon' href='favicon.ico' type='image/x-icon' />
-    <link rel="stylesheet" type="text/css" href="<?php echo htmlentities($basedir) ; ?>public/css/base.css" />
+<link rel="stylesheet" type="text/css" href="<?php echo htmlentities($basedir) ; ?>public/css/base.css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-  <meta charset="utf-8">
+
+
   <title>Titre de la page</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.js"></script>
+
 </head>
 <body>
 <nav  id="myTopnav" class="topnav ">
@@ -80,23 +89,43 @@
         </div>
     </a>
 </div>
-    <section class="col-md-6 offset-md-6">
-        <h1 class="col-md-12 text-center"><?php echo htmlentities($title); ?></h1>
-        <div id="scene" class="col-md-12"><?php echo htmlentities($title); ?></div>
-        <article id="contenu" class="col-md-12">
-            <?php echo htmlentities($title); ?>
-            <?php echo htmlentities($menu['page1']); ?>
-        </article>
+<section class="col-md-6 offset-md-6">
+    <h1 class="col-md-12 text-center"><?php echo $title; ?></h1>
+    <article id="contenu" class="col-md-12">
+        <h2 class="titre_article"> </h2>
+            <form id="test" method="post" action="../updateComment">
 
-        
-    </section>
+                <div class="form-group">
+                    <label for="lastname">Commentaire</label>
+                    <input type="text" class="form-control required" id="title" name="title" placeholder="titre" value="<?php echo $contenu['comment']; ?>">
+                </div>
+                <?php
+                $checked = "";
+                if(isset($contenu['authorized'])) {
+                    if ($contenu['authorized'] == 1) {
+                        $checked = "checked";
+                    }
+                }
+                ?>
+                <div class="form-group">
+                    <label for="comment_auth">autorisé</label>
+                    <input type="checkbox"  id="comment_auth" name="comment_auth" <?php echo $checked; ?>>
+                </div>
+                <input type="hidden" id="idc" name="idc" value="<?php echo $contenu['id']; ?>"/>
+                <button type="submit" id="submit" name="submit" class="btn btn-primary" >Enregistrez vous</button>
+            </form>
+    </article>
+
+
+</section>
+
     <button id="openNav" class="d-block"><i class="fa fa-eye"></i></button>
     <button id="closeNav"  class="d-none"><i class="fa fa-eye-slash"></i></button>
     <script>
     $( document ).ready(function() {
         $("#openNav").click(function(){
             $("#openNav").removeClass("d-block");
-            $("#openNav").addClass("d-none"); 
+            $("#openNav").addClass("d-none");
             openNav() ;
             $("#closeNav").addClass("d-block");
             $("#closeNav").removeClass("d-none");
@@ -108,8 +137,19 @@
             $("#openNav").addClass("d-block");
             $("#openNav").removeClass("d-none");
         });
-    });  
-    
+
+        $('#chapo').summernote(
+            {
+                placeholder: 'Saisissez ici votre chapo et mettez le en page',
+            }
+        );
+        $('#content').summernote(
+            {
+                placeholder: 'Saisissez ici votre contenu et mettez le en page Pas d\'image',
+            }
+        );
+    });
+
 	function openNav() {
         //    $("#pg1").slideDown("slow", function(){
         //        $("#pg2").slideDown("slow", function(){
@@ -147,7 +187,7 @@
     //    })
     }
     function myFunction() {
-        var x = document.getElementById("myTopnav");
+        const x = document.getElementById("myTopnav");
         if (x.className === "topnav") {
             x.className += " responsive";
         } else {
