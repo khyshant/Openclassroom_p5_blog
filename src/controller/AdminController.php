@@ -7,6 +7,7 @@
  */
 
 namespace App\controller;
+use App\classes\Users;
 use \App\classes\Template;
 use \App\classes\routeur\RouterException;
 
@@ -110,12 +111,24 @@ class AdminController
      *
      */
     public function controlAccess(){
-      $tpl = new Template( 'src/view/admin/' );
-        print $tpl->render( 'indexView', array(
-            'menu' => $tpl::$adminMenu,
-            'basedir' => $_SESSION['basedir'],
-            'title' => 'Bienvenue ',
-            'contenu' => 'Cliquez dans la navigation pour choisir ce que vous souhaitez faire',
+		$securePwd = Tools::securePwd("BLO_a!b_2704");
+		$secureDob = Tools::valideDob('27-04-1977');
+		$test = new Users();
+		$test->createUser(1,'Blanchard', 'Anthony', 'anth.blanchard@gmail.com', '27-07-1977', $securePwd['pwd'], $securePwd['salt']);
+        
+        if(!empty($_POST)){
+            if(Tools::valideEmail($_POST['login']) == true){
+                if(UsersController::controlAccess($_POST['login'],$_POST['password'])){
+                    header('location:home');
+                }
+            }
+        }
+        $tpl = new Template( 'src/view/admin/' );
+        print $tpl->render( 'login', array(
+                'basedir' => $_SESSION['basedir'],
+                'title' => 'Bienvenue dans l\'espace d\'administration',
+                'menu' => $tpl::$adminMenu,
+                'contenu' => 'Cliquez dans la navigation pour choisir ce que vous souhaitez faire',
             )
         );
     }
