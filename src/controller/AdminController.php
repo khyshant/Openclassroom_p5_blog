@@ -86,7 +86,10 @@ class AdminController
             }
         }
     }
-  
+
+    
+
+
     /**
      *
      */
@@ -108,6 +111,132 @@ class AdminController
      */
     public function controlAccess(){
       $tpl = new Template( 'src/view/admin/' );
+        print $tpl->render( 'indexView', array(
+            'menu' => $tpl::$adminMenu,
+            'basedir' => $_SESSION['basedir'],
+            'title' => 'Bienvenue ',
+            'contenu' => 'Cliquez dans la navigation pour choisir ce que vous souhaitez faire',
+            )
+        );
+    }
+
+    /**
+     * @param $id
+     */
+    public function page($id){
+        $tpl = new Template( 'src/view/admin/' );
+        print $tpl->render( 'indexView', array(
+            'menu' => $tpl::$adminMenu,
+            'basedir' => $_SESSION['basedir'],
+            'title' => 'Bienvenue ',
+            'contenu' => 'Cliquez dans la navigation pour choisir ce que vous souhaitez faire',
+            )
+        );
+    }
+
+    /**
+     * @param $id
+     */
+    public function user($id){
+        $tpl = new Template( 'src/view/admin/' );
+        print $tpl->render( 'indexView', array(
+            'menu' => $tpl::$adminMenu,
+            'basedir' => $_SESSION['basedir'],
+            'title' => 'Bienvenue ',
+            'contenu' => 'Cliquez dans la navigation pour choisir ce que vous souhaitez faire',
+            )
+        );
+    }
+
+    /**
+     * @param $id
+     */
+    public function comment($id){
+        $tpl = new Template( 'src/view/admin/' );
+        print $tpl->render( 'indexView', array(
+            'menu' => $tpl::$adminMenu,
+            'basedir' => $_SESSION['basedir'],
+            'title' => 'Bienvenue ',
+            'contenu' => 'Cliquez dans la navigation pour choisir ce que vous souhaitez faire',
+            )
+        );
+    }
+
+    /**
+     *
+     */
+    public function createPage(){
+        $tpl = new Template( 'src/view/admin/' );
+        print $tpl->render( 'indexView', array(
+            'menu' => $tpl::$adminMenu,
+            'basedir' => $_SESSION['basedir'],
+            'title' => 'Bienvenue ',
+            'contenu' => 'Cliquez dans la navigation pour choisir ce que vous souhaitez faire',
+            )
+        );
+    }
+
+    /**
+     *
+     */
+    public function createPost(){
+        $tpl = new Template( 'src/view/admin/' );
+        print $tpl->render( 'indexView', array(
+            'menu' => $tpl::$adminMenu,
+            'basedir' => $_SESSION['basedir'],
+            'title' => 'Bienvenue ',
+            'contenu' => 'Cliquez dans la navigation pour choisir ce que vous souhaitez faire',
+            )
+        );
+    }
+
+    /**
+     *
+     */
+    public function pageList(){
+        $tpl = new Template( 'src/view/admin/' );
+        print $tpl->render( 'indexView', array(
+            'menu' => $tpl::$adminMenu,
+            'basedir' => $_SESSION['basedir'],
+            'title' => 'Bienvenue ',
+            'contenu' => 'Cliquez dans la navigation pour choisir ce que vous souhaitez faire',
+            )
+        );
+    }
+
+    /**
+     *
+     */
+    public function postList(){
+        $tpl = new Template( 'src/view/admin/' );
+        print $tpl->render( 'indexView', array(
+            'menu' => $tpl::$adminMenu,
+            'basedir' => $_SESSION['basedir'],
+            'title' => 'Bienvenue ',
+            'contenu' => 'Cliquez dans la navigation pour choisir ce que vous souhaitez faire',
+            )
+        );
+    }
+
+    /**
+     *
+     */
+    public function userList(){
+        $tpl = new Template( 'src/view/admin/' );
+        print $tpl->render( 'indexView', array(
+            'menu' => $tpl::$adminMenu,
+            'basedir' => $_SESSION['basedir'],
+            'title' => 'Bienvenue ',
+            'contenu' => 'Cliquez dans la navigation pour choisir ce que vous souhaitez faire',
+            )
+        );
+    }
+
+    /**
+     *
+     */
+    public function commentList(){
+        $tpl = new Template( 'src/view/admin/' );
         print $tpl->render( 'indexView', array(
             'menu' => $tpl::$adminMenu,
             'basedir' => $_SESSION['basedir'],
