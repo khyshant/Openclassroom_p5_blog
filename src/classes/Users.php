@@ -344,4 +344,15 @@ class Users {
             return $userList;
         }
     }
+	
+	/**
+     * @param $id_user
+     * @return mixed
+     */
+    public function getUserById($id_user)
+    {
+        $users = new Users;
+        $list = $users->DisplayUsersList('array');
+        return $list[(int)$id_user];
+    }
 }
