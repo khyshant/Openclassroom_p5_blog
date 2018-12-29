@@ -7,7 +7,6 @@
  */
 
 namespace App\controller;
-
 use \App\classes\Template;
 use \App\classes\routeur\RouterException;
 
@@ -87,5 +86,34 @@ class AdminController
             }
         }
     }
+  
+    /**
+     *
+     */
+    public function showHome(){
+        //3_1!2_z1c1
+        $tpl = new Template( 'src/view/admin/' );
+        print $tpl->render( 'indexView', array(
+            'menu' => $tpl::$adminMenu,
+            'basedir' => $_SESSION['basedir'],
+            'title' => 'Bienvenue ',
+            'contenu' => 'Cliquez dans la navigation pour choisir ce que vous souhaitez faire',
+            )
+        );
 
+    }
+
+    /**
+     *
+     */
+    public function controlAccess(){
+      $tpl = new Template( 'src/view/admin/' );
+        print $tpl->render( 'indexView', array(
+            'menu' => $tpl::$adminMenu,
+            'basedir' => $_SESSION['basedir'],
+            'title' => 'Bienvenue ',
+            'contenu' => 'Cliquez dans la navigation pour choisir ce que vous souhaitez faire',
+            )
+        );
+    }
 }
