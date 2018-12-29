@@ -310,4 +310,38 @@ class Users {
         }
         return $author;
     }
+	
+	/**
+     * @param $param
+     * @return array|string
+     */
+    public function DisplayUsersList($param)
+    {
+        $db = Manager::getinstance();
+        $userList = array();
+        $users = $db->prepare('SELECT * FROM `user`;') ;
+
+        $users->fetch(\PDO::FETCH_OBJ);
+        $users->execute();
+        $display = "<ul>";
+        foreach($users as $user){
+            $userList[$user['id_user']]['id'] = $user['id_user'];
+            $userList[$user['id_user']]['role_id'] = $user['role_id'];
+            $userList[$user['id_user']]['email'] = $user['email'];
+            $userList[$user['id_user']]['lastname'] = $user['lastname'];
+            $userList[$user['id_user']]['firstname'] = $user['firstname'];
+            $userList[$user['id_user']]['comment_auth'] = $user['comment_auth'];
+            $userList[$user['id_user']]['date_add'] = $user['date_add'];
+            $display.="<li><a href='user/".$user['id_user']."' title='Voir'>".$user['lastname']." ".$user['firstname']."</a></li>";
+            }
+
+
+            $display .= "</ul>";
+        if($param == "list"){
+            return $display;
+        }
+        else{
+            return $userList;
+        }
+    }
 }
