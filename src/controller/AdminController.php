@@ -167,12 +167,15 @@ class AdminController
      * @param $id
      */
     public function user($id){
+        $display = new Users();
         $tpl = new Template( 'src/view/admin/' );
-        print $tpl->render( 'indexView', array(
-            'menu' => $tpl::$adminMenu,
-            'basedir' => $_SESSION['basedir'],
-            'title' => 'Bienvenue ',
-            'contenu' => 'Cliquez dans la navigation pour choisir ce que vous souhaitez faire',
+        print $tpl->render( 'updateAccountView', array(
+                'basedir' => $_SESSION['basedir'],
+                'title' => 'Bienvenue '.$_SESSION['username'],
+                'menu' => $tpl::$adminMenu,
+                'titleSection' => 'Modifier une Post',
+                'contenu' => $display->getUserById($id),
+                
             )
         );
     }
