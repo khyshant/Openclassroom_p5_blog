@@ -277,4 +277,19 @@ class Users {
         }
        
     }
+	
+	/**
+     * @param $id
+     */
+    Public function getCurrentUser($id){
+        $db = Manager::getinstance();
+
+        $users = $db->prepare('SELECT * FROM user WHERE uniqid =":uniqid"  limit 1',\PDO::FETCH_ASSOC);
+        $users->bindParam(':uniqid', $id, \PDO::PARAM_STR,40);
+               $users->execute();
+        $users->fetch(\PDO::FETCH_ASSOC);
+        foreach($users as $user){
+            $_SESSION['username'] = $user['firstname'] .' '.  $user['lastname'];
+        }
+    }
 }
