@@ -355,4 +355,27 @@ class Users {
         $list = $users->DisplayUsersList('array');
         return $list[(int)$id_user];
     }
+	
+	/**
+     * @param $id
+     * @param $comment_auth
+     */
+    public function update($id, $comment_auth)
+    {
+        $db = Manager::getinstance();
+        $add=new Users();
+        $add->setCommentAuth($comment_auth);
+
+        try {
+            $sql = 'UPDATE `user` SET  `comment_auth`=:comment_auth WHERE `id_user` = :id';
+            $query = $db->prepare($sql);
+            $query->bindValue(":id", $id, \PDO::PARAM_INT);
+            $query->bindValue(":comment_auth", $add->comment_auth(), \PDO::PARAM_INT);
+            $query->execute();
+        }
+        catch( RouterException $Exception ) {
+                // Note The Typecast To An Integer!
+            RouterException::errorForm("mise a jour de\'auteur");
+        }
+    }
 }
