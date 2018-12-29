@@ -1,0 +1,20 @@
+{
+    "name": "khyshant/app",
+    "description": "blog réalisé pour openclassroom projet 5 php/symfony",
+    "authors": [
+        {
+            "name": "khyshant",
+            "email": "anth.blanchard@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4" : {"App\\" : "src"}
+    },
+    "require": {
+        "ezyang/htmlpurifier" : "dev-master",
+        "summernote/summernote" : "v0.8.8",
+        "ext-json" : "*"
+    }
+}
+
+
