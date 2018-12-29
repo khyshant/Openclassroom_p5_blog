@@ -1,16 +1,25 @@
 <!doctype html>
 <html lang="fr">
 <head>
-
+    <meta charset="utf-8">
     <title>test css</title>
     <link rel='shortcut icon' href='favicon.ico' type='image/x-icon' />
-    <link rel="stylesheet" type="text/css" href="<?php echo htmlentities($basedir) ; ?>public/css/base.css" />
+<link rel="stylesheet" type="text/css" href="<?php echo htmlentities($basedir) ; ?>public/css/base.css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-  <meta charset="utf-8">
+
+
   <title>Titre de la page</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.js"></script>
+
 </head>
 <body>
 <nav  id="myTopnav" class="topnav ">
@@ -81,15 +90,81 @@
     </a>
 </div>
     <section class="col-md-6 offset-md-6">
-        <h1 class="col-md-12 text-center"><?php echo htmlentities($title); ?></h1>
-        <div id="scene" class="col-md-12"><?php echo htmlentities($title); ?></div>
+        <h1 class="col-md-12 text-center"><?php echo $title; ?></h1>
         <article id="contenu" class="col-md-12">
-            <?php echo htmlentities($title); ?>
-            <?php echo htmlentities($menu['page1']); ?>
-        </article>
+            <h2 class="titre_article"> </h2>
+                <?php
+                if(isset($add_a_page))
+                {
+                    ?>
+                    <form id="test" method="post" action="addPage">
+                    <?php
+                    ;}
+                ?>
+                <?php
+                if(isset($add_a_post))
+                {
+                    ?>
+                        <form id="test" method="post" action="addPost">
+                    <?php
+                    ;}
+                ?>
+                    <div class="form-group">
+                        <label for="lastname">title</label>
+                        <input type="text" class="form-control required" id="title" name="title" placeholder="titre">
+                    </div>
+                <?php
+                if(isset($add_a_page))
+                    {
+                ?>
+                    <div class="form-group">
+                        <label for="function">function</label>
+                        <select name="function" id="function" class="form-control required">
+                            <option value="" selected> </option>
+                            <option value="showHome">Accueil</option>
+                            <option value="seeBlog">Blog</option>
+                            <option value="seeCompetence">Compétences</option>
+                            <option value="seePortfolio">Portfolio</option>
+                            <option value="seeMe">Présentation</option>
+                        </select>
+                    </div>
+                <?php
+                    ;}
+                ?>
+                    <div class="form-group">
+                        <label for="chapo">chapo</label>
+                        <textarea class="form-control required" id="chapo" name="chapo" placeholder=""></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="content">content</label>
+                        <textarea class="form-control required" id="content" name="content" placeholder=""></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="meta_title">meta_title</label>
+                        <textarea class="form-control required" id="meta_title" name="meta_title" placeholder=""></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="meta_description">meta_description</label>
+                        <textarea class="form-control required" id="meta_description" name="meta_description" placeholder=""></textarea>
+                    </div>
+                    <?php
+                    if(isset($add_a_post))
+                    {
+                    ?>
+                        <div class="form-group">
+                            <label for="comment_auth">comment_auth</label>
+                            <input type="checkbox"  id="comment_auth" name="comment_auth" >
+                        </div>
+                    <?php
+                        ;}
+                    ?>
+                    <button type="submit" id="submit" name="submit" class="btn btn-primary" >Enregistrez vous</button>
+                </form>
 
-        
+
+
     </section>
+
     <button id="openNav" class="d-block"><i class="fa fa-eye"></i></button>
     <button id="closeNav"  class="d-none"><i class="fa fa-eye-slash"></i></button>
     <script>
@@ -108,7 +183,18 @@
             $("#openNav").addClass("d-block");
             $("#openNav").removeClass("d-none");
         });
-    });  
+
+        $('#chapo').summernote(
+            {
+                placeholder: 'Saisissez ici votre chapo et mettez le en page',
+            }
+        );
+        $('#content').summernote(
+            {
+                placeholder: 'Saisissez ici votre contenu et mettez le en page Pas d\'image',
+            }
+        );
+    });
     
 	function openNav() {
         //    $("#pg1").slideDown("slow", function(){
@@ -147,7 +233,7 @@
     //    })
     }
     function myFunction() {
-        var x = document.getElementById("myTopnav");
+        const x = document.getElementById("myTopnav");
         if (x.className === "topnav") {
             x.className += " responsive";
         } else {
