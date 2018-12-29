@@ -279,4 +279,24 @@ class AdminController
             )
         );
     }
+	
+	/**
+     *
+     */
+    public function updateUser(){
+        if($_SESSION['adminUser'] == "authentificate"){
+            $id = Tools::secure($_POST['idu']);
+            $comment_auth = 0;
+            if($_POST['comment_auth'] =="on"){
+                $comment_auth = 1;
+            }
+            $user = new Users;
+            $user->update( $id, $comment_auth);
+           header('location:formSubmit');
+        }
+        else{
+            RouterException::errorForm("Vous n'êtes pas authentifié");
+        }
+
+    }
 }
