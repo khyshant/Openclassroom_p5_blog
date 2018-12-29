@@ -7,6 +7,7 @@
  */
 
 namespace App\controller;
+use \App\classes\Tools ;
 use App\classes\Users;
 use \App\classes\Template;
 use \App\classes\routeur\RouterException;
