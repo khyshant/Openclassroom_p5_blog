@@ -7,6 +7,8 @@
  */
 
 namespace App\controller;
+use \App\classes\Tools ;
+use App\classes\Users;
 use \App\classes\Template;
 use \App\classes\routeur\RouterException;
 
@@ -87,7 +89,23 @@ class AdminController
         }
     }
 
-    
+    /**
+     * @param $id
+     */
+    public function dispatchUser($id)
+    {
+        if (!isset($_SESSION['adminUser'])) {
+            $this->controlAccess();
+        } else {
+            $user = new Users;
+            $user = $user->DisplayUsersList('array');
+            if (isset($user[$id])) {
+                $this->user($id);
+            } else {
+                RouterException::routeMatchesName();
+            }
+        }
+    }
 
 
     /**
@@ -110,12 +128,24 @@ class AdminController
      *
      */
     public function controlAccess(){
-      $tpl = new Template( 'src/view/admin/' );
-        print $tpl->render( 'indexView', array(
-            'menu' => $tpl::$adminMenu,
-            'basedir' => $_SESSION['basedir'],
-            'title' => 'Bienvenue ',
-            'contenu' => 'Cliquez dans la navigation pour choisir ce que vous souhaitez faire',
+		$securePwd = Tools::securePwd("BLO_a!b_2704");
+		$secureDob = Tools::valideDob('27-04-1977');
+		$test = new Users();
+		$test->createUser(1,'Blanchard', 'Anthony', 'anth.blanchard@gmail.com', '27-07-1977', $securePwd['pwd'], $securePwd['salt']);
+        
+        if(!empty($_POST)){
+            if(Tools::valideEmail($_POST['login']) == true){
+                if(UsersController::controlAccess($_POST['login'],$_POST['password'])){
+                    header('location:home');
+                }
+            }
+        }
+        $tpl = new Template( 'src/view/admin/' );
+        print $tpl->render( 'login', array(
+                'basedir' => $_SESSION['basedir'],
+                'title' => 'Bienvenue dans l\'espace d\'administration',
+                'menu' => $tpl::$adminMenu,
+                'contenu' => 'Cliquez dans la navigation pour choisir ce que vous souhaitez faire',
             )
         );
     }
@@ -138,12 +168,15 @@ class AdminController
      * @param $id
      */
     public function user($id){
+        $display = new Users();
         $tpl = new Template( 'src/view/admin/' );
-        print $tpl->render( 'indexView', array(
-            'menu' => $tpl::$adminMenu,
-            'basedir' => $_SESSION['basedir'],
-            'title' => 'Bienvenue ',
-            'contenu' => 'Cliquez dans la navigation pour choisir ce que vous souhaitez faire',
+        print $tpl->render( 'updateAccountView', array(
+                'basedir' => $_SESSION['basedir'],
+                'title' => 'Bienvenue '.$_SESSION['username'],
+                'menu' => $tpl::$adminMenu,
+                'titleSection' => 'Modifier une Post',
+                'contenu' => $display->getUserById($id),
+                
             )
         );
     }
@@ -222,12 +255,14 @@ class AdminController
      *
      */
     public function userList(){
+        $display = new Users();
         $tpl = new Template( 'src/view/admin/' );
-        print $tpl->render( 'indexView', array(
-            'menu' => $tpl::$adminMenu,
-            'basedir' => $_SESSION['basedir'],
-            'title' => 'Bienvenue ',
-            'contenu' => 'Cliquez dans la navigation pour choisir ce que vous souhaitez faire',
+        print $tpl->render( 'listView', array(
+                'basedir' => $_SESSION['basedir'],
+                'title' => 'liste des utilisateurs',
+                'menu' => $tpl::$adminMenu,
+                'titleSection' => 'liste des utilisateur',
+                'contenu' => $display->DisplayUsersList("list"),
             )
         );
     }
@@ -244,5 +279,25 @@ class AdminController
             'contenu' => 'Cliquez dans la navigation pour choisir ce que vous souhaitez faire',
             )
         );
+    }
+	
+	/**
+     *
+     */
+    public function updateUser(){
+        if($_SESSION['adminUser'] == "authentificate"){
+            $id = Tools::secure($_POST['idu']);
+            $comment_auth = 0;
+            if($_POST['comment_auth'] =="on"){
+                $comment_auth = 1;
+            }
+            $user = new Users;
+            $user->update( $id, $comment_auth);
+           header('location:formSubmit');
+        }
+        else{
+            RouterException::errorForm("Vous n'êtes pas authentifié");
+        }
+
     }
 }
