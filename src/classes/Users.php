@@ -292,4 +292,22 @@ class Users {
             $_SESSION['username'] = $user['firstname'] .' '.  $user['lastname'];
         }
     }
+	
+	    /**
+     * @param $id
+     * @return string
+     */
+    Public function getAuthor($id){
+        $db = Manager::getinstance();
+
+        $users = $db->prepare('SELECT * FROM user WHERE id =:id  limit 1');
+        $users->bindParam(':id', $id, \PDO::PARAM_INT);
+        $users->execute();
+        $users->fetch(\PDO::FETCH_ASSOC);
+        $author ="";
+        foreach($users as $user){
+            $author = $user['firstname'] .' '.  $user['lastname'];
+        }
+        return $author;
+    }
 }
