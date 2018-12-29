@@ -68,4 +68,88 @@ class FrontController{
             }
         }
     }
+
+
+    public function showHome(){
+        $display = new Pages();
+        $tpl = new Template( 'src/view/frontend/' );
+        print $tpl->render( 'pageView', array(
+            'basedir' => $_SESSION['basedir'],
+            'title' => 'Bienvenue sur mon site',
+            'menu' => $tpl::$frontMenu,
+            'contenu' => '',
+            )
+        );
+
+    }
+
+    public function createAccount(){
+          $tpl = new Template( 'src/view/frontend/' );
+        print $tpl->render( 'createAccountView', array(
+                'basedir' => $_SESSION['basedir'],
+                'title' => 'Créez votre compte',
+                'menu' => '',
+            )
+        );
+    }
+
+    public function contactUs(){
+        
+        $tpl = new Template( 'src/view/frontend/' );
+        print $tpl->render( 'contactUsView', array(
+                'basedir' => $_SESSION['basedir'],
+                'title' => 'Contactez moi',
+                'menu' => $tpl::$frontMenu,
+                'contenu' => '',
+            )
+        );
+    }
+
+    public function seeBlog(){
+        
+        $tpl = new Template( 'src/view/frontend/' );
+        print $tpl->render( 'listView', array(
+                'basedir' => $_SESSION['basedir'],
+                'title' => 'Consultez les articles',
+                'menu' => $tpl::$frontMenu,
+                'contenu' => '',
+            )
+        );
+    }
+
+    public function seeCompetence(){
+        
+        $tpl = new Template( 'src/view/frontend/' );
+        print $tpl->render( 'indexView', array(
+                'basedir' => $_SESSION['basedir'],
+                'title' => 'Ce que je crois connaitre',
+                'menu' => $tpl::$frontMenu,
+                'contenu' => '',
+            )
+        );
+    }
+
+    public function seePortfolio(){
+        
+        $tpl = new Template( 'src/view/frontend/' );
+        print $tpl->render( 'indexView', array(
+                'basedir' => $_SESSION['basedir'],
+                'title' => 'Ce que je connais',
+                'menu' => $tpl::$frontMenu,
+                'contenu' => '',
+            )
+        );
+    }
+
+    public function seeMe(){
+        
+        $tpl = new Template( 'src/view/frontend/' );
+        print $tpl->render( 'indexView', array(
+                'basedir' => $_SESSION['basedir'],
+                'title' => 'Qui suis je ?',
+                'menu' => $tpl::$frontMenu,
+                'contenu' => '',
+            )
+        );
+    }
 }
