@@ -306,7 +306,69 @@ class Content {
         catch( RouterException $Exception ) {
             RouterException::errorForm("creation de contenu");
         }
+    }
+	
+	/**
+     * @param $type_id
+     * @return array
+     */
+    public function listContent($type_id)
+    {
+        $db = Manager::getinstance();
+        $contentList = array();
+        $contents = $db->prepare('SELECT * FROM `posts`;') ;
+        $contents->fetch(\PDO::FETCH_OBJ);
+        $contents->execute();
 
 
+        foreach($contents as $content){
+            if($type_id){
+                if($content['type_id']==$type_id){
+                    $author = new Users;
+                    $contentList[$content['id']]['id'] = $content['id'];
+                    $contentList[$content['id']]['function'] = $content['function'];
+                    $contentList[$content['id']]['type_id'] = $content['type_id'];
+                    $contentList[$content['id']]['author'] = $author->getAuthor($content['author']);
+                    $contentList[$content['id']]['title'] = $content['title'];
+                    $contentList[$content['id']]['chapo'] = $content['chapo'];
+                    $contentList[$content['id']]['content'] = $content['content'];
+                    $contentList[$content['id']]['meta_title'] = $content['meta_title'];
+                    $contentList[$content['id']]['meta_description'] = $content['meta_description'];
+                    $contentList[$content['id']]['comment_auth'] = $content['comment_auth'];
+                    $contentList[$content['id']]['date_upd'] = $content['date_upd'];
+                    $contentList[$content['id']]['media'] = '';
+                }
+            }
+            else{
+                $author = new Users;
+                $contentList[$content['id']]['id'] = $content['id'];
+                $contentList[$content['id']]['function'] = $content['function'];
+                $contentList[$content['id']]['type_id'] = $content['type_id'];
+                $contentList[$content['id']]['author'] = $author->getAuthor($content['author']);
+                $contentList[$content['id']]['title'] = $content['title'];
+                $contentList[$content['id']]['chapo'] = $content['chapo'];
+                $contentList[$content['id']]['content'] = $content['content'];
+                $contentList[$content['id']]['meta_title'] = $content['meta_title'];
+                $contentList[$content['id']]['meta_description'] = $content['meta_description'];
+                $contentList[$content['id']]['comment_auth'] = $content['comment_auth'];
+                $contentList[$content['id']]['date_upd'] = $content['date_upd'];
+                $contentList[$content['id']]['media'] = '';
+
+            }
+
+        }
+
+        return $contentList;
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function getContentById($id)
+    {
+        $contents = new Content;
+        $contents = $contents->listContent(false);
+        return $contents[(int)$id];
     }
 }
