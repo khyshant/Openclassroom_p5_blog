@@ -12,7 +12,7 @@ namespace App\classes\content;
 
 class Pages extends Content {
 
-   /**
+    /**
      * @param $author
      * @param $function
      * @param $title
@@ -26,8 +26,24 @@ class Pages extends Content {
     {
         Content::addContent(1,$author, $function, $title,$chapo,$content,$meta_title,$meta_description,$comment_auth);
     }
-	
-	/**
+
+    /**
+     * @param $id
+     * @param $author
+     * @param $title
+     * @param $chapo
+     * @param $content
+     * @param $meta_title
+     * @param $meta_description
+     * @param $comment_auth
+     * @param $function
+     */
+    public function updatePage($id, $author, $title, $chapo, $content, $meta_title, $meta_description, $comment_auth, $function)
+    {
+        Content::updateContent($id, $author, $title, $chapo, $content, $meta_title, $meta_description, $comment_auth,$function);
+    }
+
+    /**
      * @param $id_page
      * @return mixed
      */
@@ -37,8 +53,23 @@ class Pages extends Content {
             $pages = $contents->listContent(1);
         return $pages[(int)$id_page];
     }
-	
-	/**
+
+    /**
+     * @param $param
+     * @return mixed
+     */
+    public function getPageByFn($param)
+    {
+        $contents = new Content;
+        $pages = $contents->listContent(1);
+        foreach ($pages as $page) {
+            if ($page['function'] == $param) {
+                return $page;
+            }
+        }
+    }
+
+    /**
      * @return string
      */
     public function DisplayPageList()
