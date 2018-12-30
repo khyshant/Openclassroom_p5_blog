@@ -7,6 +7,8 @@
  */
 
 namespace App\controller;
+use App\classes\content\Comments;
+use App\classes\content\Pages;
 use \App\classes\Tools ;
 use App\classes\Users;
 use \App\classes\Template;
@@ -88,7 +90,24 @@ class AdminController
             }
         }
     }
-
+	
+	/**
+     * @param $id
+     */
+    public function dispatchPage($id)
+    {
+        if (!isset($_SESSION['adminUser'])) {
+            $this->controlAccess();
+        } else {
+            $contents = new Content;
+            $page = $contents->listContent(false);
+            if (isset($page[$id])) {
+                $this->page($id);
+            } else {
+                RouterException::routeMatchesName();
+            }
+        }
+    }
     /**
      * @param $id
      */
@@ -154,12 +173,15 @@ class AdminController
      * @param $id
      */
     public function page($id){
+        $display = new Content();
         $tpl = new Template( 'src/view/admin/' );
-        print $tpl->render( 'indexView', array(
-            'menu' => $tpl::$adminMenu,
-            'basedir' => $_SESSION['basedir'],
-            'title' => 'Bienvenue ',
-            'contenu' => 'Cliquez dans la navigation pour choisir ce que vous souhaitez faire',
+        print $tpl->render( 'updatePageView', array(
+                'basedir' => $_SESSION['basedir'],
+                'title' => 'Bienvenue '.$_SESSION['username'],
+                'menu' => $tpl::$adminMenu,
+                'titleSection' => 'Modifier une page',
+                'contenu' => $display->getContentById($id),
+                'add_a_page' => 'createPage',
             )
         );
     }
@@ -227,12 +249,15 @@ class AdminController
      *
      */
     public function pageList(){
+        $display = new Pages();
         $tpl = new Template( 'src/view/admin/' );
-        print $tpl->render( 'indexView', array(
-            'menu' => $tpl::$adminMenu,
-            'basedir' => $_SESSION['basedir'],
-            'title' => 'Bienvenue ',
-            'contenu' => 'Cliquez dans la navigation pour choisir ce que vous souhaitez faire',
+        print $tpl->render( 'listView', array(
+                'basedir' => $_SESSION['basedir'],
+                'title' => 'Bienvenue '.$_SESSION['username'],
+                'menu' => $tpl::$adminMenu,
+                'titleSection' => 'listing des pages',
+                'contenu' => $display->DisplayPageList(),
+                'add_a_page' => 'createPage',
             )
         );
     }
@@ -298,6 +323,65 @@ class AdminController
         else{
             RouterException::errorForm("Vous n'êtes pas authentifié");
         }
-
+    }
+	
+	/**
+     *
+     */
+    public function addPage(){
+        if($_SESSION['adminUser'] == "authentificate"){
+            $title = Tools::secure($_POST['title']);
+            $author = Tools::secure($_SESSION['adminId']);
+            $chapo = Tools::secure($_POST['chapo']);
+            $content = Tools::secure($_POST['content']);
+            $meta_title = Tools::secure($_POST['meta_title']);
+            $meta_description = Tools::secure($_POST['meta_description']);
+            $function = Tools::secure($_POST['function']);
+            $comment_auth = 0;
+            $page = new Pages;
+            $page->addPage($author, $function , $title, $chapo,$content,$meta_title,$meta_description,$comment_auth);
+            header('location:pageList');
+        }
+        else{
+            RouterException::errorForm("Vous n'êtes pas authentifié");
+        }
+    }
+	
+	/**
+     *
+     */
+    public function updatePageOrPost(){
+        if($_SESSION['adminUser'] == "authentificate"){
+            $id = Tools::secure($_POST['idc']);
+            $title = Tools::secure($_POST['title']);
+            $author = Tools::secure($_SESSION['adminId']);
+            $chapo = Tools::secure($_POST['chapo']);
+            $pageContent = Tools::secure($_POST['content']);
+            $meta_title = Tools::secure($_POST['meta_title']);
+            $meta_description = Tools::secure($_POST['meta_description']);
+            $function = Tools::secure($_POST['function']);
+            $comment_auth = 0;
+            $content = new Content;
+            $content->updateContent( $id, $author, $title, $chapo,$pageContent,$meta_title,$meta_description,$comment_auth, $function );
+            header('location:formSubmit');
+        }
+        else{
+            RouterException::errorForm("Vous n'êtes pas authentifié");
+        }
+    }
+	
+	/**
+     *
+     */
+    public function formSubmit(){
+        $tpl = new Template( 'src/view/admin/' );
+        print $tpl->render( 'indexView', array(
+                'basedir' => $_SESSION['basedir'],
+                'title' => 'Votre formulaire a bien été soumis',
+                'menu' => $tpl::$adminMenu,
+                'titleSection' => 'Envoi de formulaire',
+                'contenu' => 'Votre formulaire a bien été soumis',
+            )
+        );
     }
 }
