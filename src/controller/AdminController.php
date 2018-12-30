@@ -369,4 +369,19 @@ class AdminController
             RouterException::errorForm("Vous n'êtes pas authentifié");
         }
     }
+	
+	/**
+     *
+     */
+    public function formSubmit(){
+        $tpl = new Template( 'src/view/admin/' );
+        print $tpl->render( 'indexView', array(
+                'basedir' => $_SESSION['basedir'],
+                'title' => 'Votre formulaire a bien été soumis',
+                'menu' => $tpl::$adminMenu,
+                'titleSection' => 'Envoi de formulaire',
+                'contenu' => 'Votre formulaire a bien été soumis',
+            )
+        );
+    }
 }
