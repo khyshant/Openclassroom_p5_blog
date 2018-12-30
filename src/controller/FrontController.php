@@ -71,13 +71,13 @@ class FrontController{
 
 
     public function showHome(){
-        
+        $display = new Pages();
         $tpl = new Template( 'src/view/frontend/' );
         print $tpl->render( 'pageView', array(
             'basedir' => $_SESSION['basedir'],
             'title' => 'Bienvenue sur mon site',
             'menu' => $tpl::$frontMenu,
-            'contenu' => '',
+            'contenu' => $display->getPageByFn("showHome"),
             )
         );
 
@@ -88,67 +88,67 @@ class FrontController{
         print $tpl->render( 'createAccountView', array(
                 'basedir' => $_SESSION['basedir'],
                 'title' => 'Créez votre compte',
-                'menu' => '',
+                'menu' => $tpl::$frontMenu,
             )
         );
     }
 
     public function contactUs(){
-        
+        $display = new Pages();
         $tpl = new Template( 'src/view/frontend/' );
         print $tpl->render( 'contactUsView', array(
                 'basedir' => $_SESSION['basedir'],
                 'title' => 'Contactez moi',
                 'menu' => $tpl::$frontMenu,
-                'contenu' => '',
+                //'contenu' => $display->getPageByFn("contactUs"),
             )
         );
     }
 
     public function seeBlog(){
-        
+        $display = new Posts();
         $tpl = new Template( 'src/view/frontend/' );
         print $tpl->render( 'listView', array(
                 'basedir' => $_SESSION['basedir'],
                 'title' => 'Consultez les articles',
                 'menu' => $tpl::$frontMenu,
-                'contenu' => '',
+                'contenu' => $display->displayPostList('front'),
             )
         );
     }
 
     public function seeCompetence(){
-        
+        $display = new Pages();
         $tpl = new Template( 'src/view/frontend/' );
         print $tpl->render( 'indexView', array(
                 'basedir' => $_SESSION['basedir'],
                 'title' => 'Ce que je crois connaitre',
                 'menu' => $tpl::$frontMenu,
-                'contenu' => '',
+                'contenu' => $display->getPageByFn("seeCompetence"),
             )
         );
     }
 
     public function seePortfolio(){
-        
+        $display = new Pages();
         $tpl = new Template( 'src/view/frontend/' );
         print $tpl->render( 'indexView', array(
                 'basedir' => $_SESSION['basedir'],
                 'title' => 'Ce que je connais',
                 'menu' => $tpl::$frontMenu,
-                'contenu' => '',
+                'contenu' => $display->getPageByFn("contactUs"),
             )
         );
     }
 
     public function seeMe(){
-        
+        $display = new Pages();
         $tpl = new Template( 'src/view/frontend/' );
         print $tpl->render( 'indexView', array(
                 'basedir' => $_SESSION['basedir'],
                 'title' => 'Qui suis je ?',
                 'menu' => $tpl::$frontMenu,
-                'contenu' => '',
+                'contenu' => $display->getPageByFn("seeMe"),
             )
         );
     }
