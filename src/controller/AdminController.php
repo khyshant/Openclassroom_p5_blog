@@ -7,6 +7,8 @@
  */
 
 namespace App\controller;
+use App\classes\content\Comments;
+use App\classes\content\Pages;
 use \App\classes\Tools ;
 use App\classes\Users;
 use \App\classes\Template;
@@ -88,7 +90,24 @@ class AdminController
             }
         }
     }
-
+	
+	/**
+     * @param $id
+     */
+    public function dispatchPage($id)
+    {
+        if (!isset($_SESSION['adminUser'])) {
+            $this->controlAccess();
+        } else {
+            $contents = new Content;
+            $page = $contents->listContent(false);
+            if (isset($page[$id])) {
+                $this->page($id);
+            } else {
+                RouterException::routeMatchesName();
+            }
+        }
+    }
     /**
      * @param $id
      */
