@@ -256,5 +256,57 @@ class Content {
     {
         $this->_title = $title;
     }
+	
+	/**/
+    /**
+     * @param $type
+     * @param $author
+     * @param $title
+     * @param $chapo
+     * @param $content
+     * @param $meta_title
+     * @param $meta_description
+     * @param $comment_auth
+     * @param $function
+     */
+    public function addContent($type, $author, $function, $title, $chapo, $content, $meta_title, $meta_description, $comment_auth)
+    {
 
+        $db = Manager::getinstance();
+        $add=new Content();
+        $add->setType($type);
+        $add->setAuthor($author);
+        $add->setFunction($function);
+        $add->setTitle($title);
+        $add->setChapo($chapo);
+        $add->setContent($content);
+        $add->setMetaTitle($meta_title);
+        $add->setMetaDescription($meta_description);
+        $add->setCommentAuth($comment_auth);
+        $add->setDateAdd(date('y-m-d H:i:s'));
+        $add->setDateUpd(date('y-m-d H:i:s'));
+
+        try {
+            $sql = "INSERT INTO `posts`(`type_id`, `author`, `function` , `title`, `chapo`, `content`, `meta_title`, `meta_description`, `comment_auth`, `DATE_ADD`, `date_upd`) VALUES (:type_id, :author, :function, :title, :chapo, :content, :meta_title, :meta_description,:comment_auth,:date_add,:date_update)";
+            $query = $db->prepare($sql);
+
+            $query->bindValue(":type_id", $add->_type, \PDO::PARAM_INT);
+            $query->bindValue(":author", $add->_author, \PDO::PARAM_INT);
+            $query->bindValue(":function", $add->_function, \PDO::PARAM_STR);
+            $query->bindValue(":title", $add->_title, \PDO::PARAM_STR);
+            $query->bindValue(":chapo", $add->_chapo, \PDO::PARAM_STR);
+            $query->bindValue(":content", $add->_content, \PDO::PARAM_STR);
+            $query->bindValue(":meta_title", $add->_meta_title, \PDO::PARAM_STR);
+            $query->bindValue(":meta_description", $add->_meta_description, \PDO::PARAM_STR);
+            $query->bindValue(":comment_auth", $add->_comment_auth, \PDO::PARAM_INT);
+            $query->bindValue(":date_add", $add->_dateAdd);
+            $query->bindValue(":date_update", $add->_date_upd);
+            $query->execute();
+        }
+        catch( RouterException $Exception ) {
+            RouterException::errorForm("creation de contenu");
+        }
+
+
+    }
 }
