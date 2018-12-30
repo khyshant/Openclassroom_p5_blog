@@ -173,12 +173,15 @@ class AdminController
      * @param $id
      */
     public function page($id){
+        $display = new Content();
         $tpl = new Template( 'src/view/admin/' );
-        print $tpl->render( 'indexView', array(
-            'menu' => $tpl::$adminMenu,
-            'basedir' => $_SESSION['basedir'],
-            'title' => 'Bienvenue ',
-            'contenu' => 'Cliquez dans la navigation pour choisir ce que vous souhaitez faire',
+        print $tpl->render( 'updatePageView', array(
+                'basedir' => $_SESSION['basedir'],
+                'title' => 'Bienvenue '.$_SESSION['username'],
+                'menu' => $tpl::$adminMenu,
+                'titleSection' => 'Modifier une page',
+                'contenu' => $display->getContentById($id),
+                'add_a_page' => 'createPage',
             )
         );
     }
@@ -246,12 +249,15 @@ class AdminController
      *
      */
     public function pageList(){
+        $display = new Pages();
         $tpl = new Template( 'src/view/admin/' );
-        print $tpl->render( 'indexView', array(
-            'menu' => $tpl::$adminMenu,
-            'basedir' => $_SESSION['basedir'],
-            'title' => 'Bienvenue ',
-            'contenu' => 'Cliquez dans la navigation pour choisir ce que vous souhaitez faire',
+        print $tpl->render( 'listView', array(
+                'basedir' => $_SESSION['basedir'],
+                'title' => 'Bienvenue '.$_SESSION['username'],
+                'menu' => $tpl::$adminMenu,
+                'titleSection' => 'listing des pages',
+                'contenu' => $display->DisplayPageList(),
+                'add_a_page' => 'createPage',
             )
         );
     }
