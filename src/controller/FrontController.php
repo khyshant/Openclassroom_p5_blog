@@ -194,4 +194,15 @@ class FrontController{
         }
 
     }
+	
+	public function controlAccess(){
+        $return = $_POST['idc'];
+        if(!empty($_POST)){
+            if(Tools::valideEmail($_POST['login']) == true){
+                if(UsersController::controlAccess($_POST['login'],$_POST['password'])){
+                    header('location: post/'.$return);
+                }
+            }
+        }
+    }
 }
