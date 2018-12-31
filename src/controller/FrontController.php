@@ -7,7 +7,13 @@
  */
 
 namespace App\controller;
+use \App\classes\Users ;
+use \App\classes\Tools ;
 use \App\classes\Template;
+use App\classes\content\Pages;
+use App\classes\content\Posts;
+use App\classes\content\Comments;
+use \App\classes\content\Content ;
 use \App\classes\routeur\RouterException;
 
 /**
@@ -69,6 +75,19 @@ class FrontController{
         }
     }
 
+    /**
+     * @param $id
+     */
+    public function dispatchPost($id){
+            $contents = new Content;
+            $page = $contents->listContent(false);
+
+            if (isset($page[$id])) {
+                $this->post($id);
+            } else {
+                RouterException::routeMatchesName();
+            }
+        }
 
     public function showHome(){
         $display = new Pages();
@@ -152,8 +171,8 @@ class FrontController{
             )
         );
     }
-	
-	public function validAccount(){
+
+    public function validAccount(){
 
         /*$securePwd = Tools::securePwd("BLO_a!b_2704");
                $secureDob = Tools::valideDob('27-04-1977');
@@ -194,8 +213,8 @@ class FrontController{
         }
 
     }
-	
-	public function controlAccess(){
+
+    public function controlAccess(){
         $return = $_POST['idc'];
         if(!empty($_POST)){
             if(Tools::valideEmail($_POST['login']) == true){
@@ -204,5 +223,54 @@ class FrontController{
                 }
             }
         }
+    }
+
+    /**
+     * @param $id
+     */
+    public function post($id){
+        $display = new Content();
+        $comments = new Comments();
+        $tpl = new Template( 'src/view/frontend/' );
+        print $tpl->render( 'postView', array(
+                'basedir' => $_SESSION['basedir'],
+                'title' => 'Bienvenue '.$_SESSION['username'],
+                'menu' => $tpl::$frontMenu,
+                'titleSection' => 'Modifier une page',
+                'contenu' => $display->getContentById($id),
+                'commentaires' => $comments->getCommentByPost($id),
+                'return' => 'post/'.$id,
+            )
+        );
+    }
+
+    public function createComment(){
+        if(!empty($_POST['comment'])){
+            $post_id = Tools::secure($_POST['idc']);
+            $author = Tools::secure($_SESSION['adminId']);
+            $comment = Tools::secure($_POST['comment']);
+            $add = new Comments;
+            if($add->addComment($post_id,$author, $comment)){
+                header('location:formSubmit');
+            }
+            else{
+                RouterException::errorForm("Echec de soumission");
+            }
+        }
+        else{
+            RouterException::errorForm("Echec de soumission");
+        }
+    }
+
+    public function formSubmit(){
+        $tpl = new Template( 'src/view/frontend/' );
+        print $tpl->render( 'indexView', array(
+                'basedir' => $_SESSION['basedir'],
+                'title' => 'Votre formulaire a bien été soumis',
+                'menu' => $tpl::$frontMenu,
+                'titleSection' => 'Envoi de formulaire',
+                'contenu' => 'Votre formulaire a bien été soumis',
+            )
+        );
     }
 }
