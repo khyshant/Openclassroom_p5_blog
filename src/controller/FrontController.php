@@ -273,4 +273,32 @@ class FrontController{
             )
         );
     }
+
+    public function messageUs(){
+        if(!empty($_POST['Message'])){
+            $firstname = Tools::secure($_POST['firstname']);
+            $lastname = Tools::secure($_POST['lastname']);
+            $email = Tools::secure($_POST['Email']);
+            $Message = Tools::secure($_POST['Message']);
+
+            $sujet = 'Un message de votre blog';
+            $message = $firstname.' '.$lastname.' à écrit : <br/>'.$Message.' <br/><br/>email : '.$email.' <br/>';
+
+            $destinataire = 'anth.blanchard@gmail.com   ';
+            $headers = "From: \"ton blog\"<contact@anthony-blanchard.com>\n";
+            $headers .= "Reply-To: contact@anthony-blanchard.com\n";
+            $headers .= "Content-Type: text/html; charset=\"iso-8859-1\"";
+            if(mail($destinataire,$sujet,$message,$headers))
+            {
+                header('location:formSubmit');
+            }
+            else
+            {
+                RouterException::errorForm("Echec de soumission");
+            }
+        }
+        else{
+            RouterException::errorForm("Echec de soumission");
+        }
+    }
 }

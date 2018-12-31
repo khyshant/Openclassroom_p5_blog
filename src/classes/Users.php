@@ -277,8 +277,8 @@ class Users {
         }
        
     }
-	
-	/**
+
+    /**
      * @param $id
      */
     Public function getCurrentUser($id){
@@ -292,8 +292,8 @@ class Users {
             $_SESSION['username'] = $user['firstname'] .' '.  $user['lastname'];
         }
     }
-	
-	    /**
+
+    /**
      * @param $id
      * @return string
      */
@@ -310,8 +310,8 @@ class Users {
         }
         return $author;
     }
-	
-	/**
+
+    /**
      * @param $param
      * @return array|string
      */
@@ -344,8 +344,8 @@ class Users {
             return $userList;
         }
     }
-	
-	/**
+
+    /**
      * @param $id_user
      * @return mixed
      */
@@ -355,8 +355,8 @@ class Users {
         $list = $users->DisplayUsersList('array');
         return $list[(int)$id_user];
     }
-	
-	/**
+
+    /**
      * @param $id
      * @param $comment_auth
      */

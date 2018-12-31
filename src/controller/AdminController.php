@@ -7,11 +7,9 @@
  */
 
 namespace App\controller;
-
 use App\classes\content\Pages;
 use App\classes\content\Posts;
 use App\classes\content\Comments;
-
 use App\classes\Users;
 use \App\classes\content\Content ;
 use \App\classes\Tools ;
@@ -94,24 +92,7 @@ class AdminController
             }
         }
     }
-	
-	/**
-     * @param $id
-     */
-    public function dispatchPage($id)
-    {
-        if (!isset($_SESSION['adminUser'])) {
-            $this->controlAccess();
-        } else {
-            $contents = new Content;
-            $page = $contents->listContent(false);
-            if (isset($page[$id])) {
-                $this->page($id);
-            } else {
-                RouterException::routeMatchesName();
-            }
-        }
-    }
+
     /**
      * @param $id
      */
@@ -239,7 +220,7 @@ class AdminController
                 'menu' => $tpl::$adminMenu,
                 'titleSection' => 'Modifier une Post',
                 'contenu' => $display->getUserById($id),
-                
+                'add_a_page' => 'createPage',
             )
         );
     }
@@ -476,66 +457,7 @@ class AdminController
         else{
             RouterException::errorForm("Vous n'êtes pas authentifié");
         }
-    }
-	
-	/**
-     *
-     */
-    public function addPage(){
-        if($_SESSION['adminUser'] == "authentificate"){
-            $title = Tools::secure($_POST['title']);
-            $author = Tools::secure($_SESSION['adminId']);
-            $chapo = Tools::secure($_POST['chapo']);
-            $content = Tools::secure($_POST['content']);
-            $meta_title = Tools::secure($_POST['meta_title']);
-            $meta_description = Tools::secure($_POST['meta_description']);
-            $function = Tools::secure($_POST['function']);
-            $comment_auth = 0;
-            $page = new Pages;
-            $page->addPage($author, $function , $title, $chapo,$content,$meta_title,$meta_description,$comment_auth);
-            header('location:pageList');
-        }
-        else{
-            RouterException::errorForm("Vous n'êtes pas authentifié");
-        }
-    }
-	
-	/**
-     *
-     */
-    public function updatePageOrPost(){
-        if($_SESSION['adminUser'] == "authentificate"){
-            $id = Tools::secure($_POST['idc']);
-            $title = Tools::secure($_POST['title']);
-            $author = Tools::secure($_SESSION['adminId']);
-            $chapo = Tools::secure($_POST['chapo']);
-            $pageContent = Tools::secure($_POST['content']);
-            $meta_title = Tools::secure($_POST['meta_title']);
-            $meta_description = Tools::secure($_POST['meta_description']);
-            $function = Tools::secure($_POST['function']);
-            $comment_auth = 0;
-            $content = new Content;
-            $content->updateContent( $id, $author, $title, $chapo,$pageContent,$meta_title,$meta_description,$comment_auth, $function );
-            header('location:formSubmit');
-        }
-        else{
-            RouterException::errorForm("Vous n'êtes pas authentifié");
-        }
-    }
-	
-	/**
-     *
-     */
-    public function formSubmit(){
-        $tpl = new Template( 'src/view/admin/' );
-        print $tpl->render( 'indexView', array(
-                'basedir' => $_SESSION['basedir'],
-                'title' => 'Votre formulaire a bien été soumis',
-                'menu' => $tpl::$adminMenu,
-                'titleSection' => 'Envoi de formulaire',
-                'contenu' => 'Votre formulaire a bien été soumis',
-            )
-        );
+
     }
 
     /**
@@ -557,4 +479,25 @@ class AdminController
         }
 
     }
+   /* public function updatePost(){
+        if($_SESSION['adminUser'] == "authentificate"){
+            $id = Tools::secure($_POST['id_content']);
+            $title = Tools::secure($_POST['title']);
+            $author = Tools::secure($_SESSION['adminId']);
+            $chapo = Tools::secure($_POST['chapo']);
+            $content = Tools::secure($_POST['content']);
+            $meta_title = Tools::secure($_POST['meta_title']);
+            $meta_description = Tools::secure($_POST['meta_description']);
+            $comment_auth = 0;
+            if($_POST['comment_auth'] =="on"){
+                $comment_auth = 1;
+            }
+            Posts::updatePost( $id, $author, $title, $chapo,$content,$meta_title,$meta_description,$comment_auth);
+            header('location:postList');
+        }
+        else{
+            RouterException::errorForm("Vous n'êtes pas authentifié");
+        }
+    }*/
+
 }

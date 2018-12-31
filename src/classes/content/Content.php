@@ -256,8 +256,9 @@ class Content {
     {
         $this->_title = $title;
     }
-	
-	/**/
+
+
+    /**/
     /**
      * @param $type
      * @param $author
@@ -306,9 +307,59 @@ class Content {
         catch( RouterException $Exception ) {
             RouterException::errorForm("creation de contenu");
         }
+
+
     }
-	
-	/**
+
+    /**
+     * @param $id
+     * @param $author
+     * @param $title
+     * @param $chapo
+     * @param $content
+     * @param $meta_title
+     * @param $meta_description
+     * @param $comment_auth
+     * @param $function
+     */
+    public function updateContent($id, $author, $title, $chapo, $content, $meta_title, $meta_description, $comment_auth, $function)
+    {
+        $db = Manager::getinstance();
+        $add=new Content();
+        $add->setId($id);
+        $add->setAuthor($author);
+        $add->setFunction($function);
+        $add->setTitle($title);
+        $add->setChapo($chapo);
+        $add->setContent($content);
+        $add->setMetaTitle($meta_title);
+        $add->setMetaDescription($meta_description);
+        $add->setCommentAuth($comment_auth);
+        $add->setDateUpd(date('Y-m-d H:i:s'));
+
+        try {
+            $sql = 'UPDATE `posts` SET  `author`=:author, `function`=:function, `title`=:title, `chapo`=:chapo, `content`=:content, `meta_title`=:meta_title, `meta_description`=:meta_description, `comment_auth`=:comment_auth, `date_upd`=:date_update WHERE `id` = :id';
+            $query = $db->prepare($sql);
+
+            $query->bindValue(":id", $add->_id, \PDO::PARAM_INT);
+            $query->bindValue(":author", $add->_author, \PDO::PARAM_INT);
+            $query->bindValue(":function", $add->_function, \PDO::PARAM_STR);
+            $query->bindValue(":title", $add->_title, \PDO::PARAM_STR);
+            $query->bindValue(":chapo", $add->_chapo, \PDO::PARAM_STR);
+            $query->bindValue(":content", $add->_content, \PDO::PARAM_STR);
+            $query->bindValue(":meta_title", $add->_meta_title, \PDO::PARAM_STR);
+            $query->bindValue(":meta_description", $add->_meta_description, \PDO::PARAM_STR);
+            $query->bindValue(":comment_auth", $add->_comment_auth, \PDO::PARAM_INT);
+            $query->bindValue(":date_update", date('Y-m-d H:i:s'));
+            $query->execute();
+        }
+        catch( RouterException $Exception ) {
+            // Note The Typecast To An Integer!
+            RouterException::errorForm("mise a jour de contenu");
+        }
+    }
+
+    /**
      * @param $type_id
      * @return array
      */
