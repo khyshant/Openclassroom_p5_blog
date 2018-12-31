@@ -7,7 +7,13 @@
  */
 
 namespace App\controller;
+use \App\classes\Users ;
+use \App\classes\Tools ;
 use \App\classes\Template;
+use App\classes\content\Pages;
+use App\classes\content\Posts;
+use App\classes\content\Comments;
+use \App\classes\content\Content ;
 use \App\classes\routeur\RouterException;
 
 /**
@@ -69,15 +75,28 @@ class FrontController{
         }
     }
 
+    /**
+     * @param $id
+     */
+    public function dispatchPost($id){
+            $contents = new Content;
+            $page = $contents->listContent(false);
+
+            if (isset($page[$id])) {
+                $this->post($id);
+            } else {
+                RouterException::routeMatchesName();
+            }
+        }
 
     public function showHome(){
-        
+        $display = new Pages();
         $tpl = new Template( 'src/view/frontend/' );
         print $tpl->render( 'pageView', array(
             'basedir' => $_SESSION['basedir'],
             'title' => 'Bienvenue sur mon site',
             'menu' => $tpl::$frontMenu,
-            'contenu' => '',
+            'contenu' => $display->getPageByFn("showHome"),
             )
         );
 
@@ -88,68 +107,172 @@ class FrontController{
         print $tpl->render( 'createAccountView', array(
                 'basedir' => $_SESSION['basedir'],
                 'title' => 'Créez votre compte',
-                'menu' => '',
+                'menu' => $tpl::$frontMenu,
             )
         );
     }
 
     public function contactUs(){
-        
+        $display = new Pages();
         $tpl = new Template( 'src/view/frontend/' );
         print $tpl->render( 'contactUsView', array(
                 'basedir' => $_SESSION['basedir'],
                 'title' => 'Contactez moi',
                 'menu' => $tpl::$frontMenu,
-                'contenu' => '',
+                //'contenu' => $display->getPageByFn("contactUs"),
             )
         );
     }
 
     public function seeBlog(){
-        
+        $display = new Posts();
         $tpl = new Template( 'src/view/frontend/' );
         print $tpl->render( 'listView', array(
                 'basedir' => $_SESSION['basedir'],
                 'title' => 'Consultez les articles',
                 'menu' => $tpl::$frontMenu,
-                'contenu' => '',
+                'contenu' => $display->displayPostList('front'),
             )
         );
     }
 
     public function seeCompetence(){
-        
+        $display = new Pages();
         $tpl = new Template( 'src/view/frontend/' );
         print $tpl->render( 'indexView', array(
                 'basedir' => $_SESSION['basedir'],
                 'title' => 'Ce que je crois connaitre',
                 'menu' => $tpl::$frontMenu,
-                'contenu' => '',
+                'contenu' => $display->getPageByFn("seeCompetence"),
             )
         );
     }
 
     public function seePortfolio(){
-        
+        $display = new Pages();
         $tpl = new Template( 'src/view/frontend/' );
         print $tpl->render( 'indexView', array(
                 'basedir' => $_SESSION['basedir'],
                 'title' => 'Ce que je connais',
                 'menu' => $tpl::$frontMenu,
-                'contenu' => '',
+                'contenu' => $display->getPageByFn("contactUs"),
             )
         );
     }
 
     public function seeMe(){
-        
+        $display = new Pages();
         $tpl = new Template( 'src/view/frontend/' );
         print $tpl->render( 'indexView', array(
                 'basedir' => $_SESSION['basedir'],
                 'title' => 'Qui suis je ?',
                 'menu' => $tpl::$frontMenu,
-                'contenu' => '',
+                'contenu' => $display->getPageByFn("seeMe"),
             )
         );
     }
+
+    public function validAccount(){
+
+        /*$securePwd = Tools::securePwd("BLO_a!b_2704");
+               $secureDob = Tools::valideDob('27-04-1977');
+               $test = new Users();
+               $test->createUser(1,'Blanchard', 'Anthony', 'anth.blanchard@gmail.com', '27-07-1977', $securePwd['pwd'], $securePwd['salt']);
+                */
+        $secureDob = Tools::valideDob($_POST['dob']);
+        $securePwd = Tools::securePwd($_POST['password']);
+
+        if($secureDob != false && $securePwd != false){
+            echo 'ici';
+            $account = new Users();
+            $account->createUser(2,$_POST['firstname'], $_POST['lastname'], $_POST['login'], $secureDob, $securePwd['pwd'], $securePwd['salt']);
+        }
+        echo 'ici1';
+        $erreur = "";
+        if($secureDob == false){
+            $erreur.=" - code erreur D100 - OB - ";
+        }
+        if($securePwd == false){
+            $erreur.="code erreur P100 - WD";
+        }
+        if($erreur !=""){
+            $tpl = new Template( 'src/view/frontend/' );
+            print $tpl->render( 'createAccountView', array(
+                'basedir' => $_SESSION['basedir'],
+                'title' => 'Vous pouvez créer un compte pour commenter les articles',
+                'menu' => $tpl::$frontMenu,
+                'erreur' => 'erreur durant le transfert du formulaire '.$erreur,
+                'contenu' => 'Cliquez dans la navigation pour choisir ce que vous souhaitez faire',
+                )
+            );
+        }
+        else{
+            echo 'ici';
+            // !!! attention au renvoi ==> voir fonction historic =1 de  michel
+            header('location:home');
+        }
+
+    }
+
+    public function controlAccess(){
+        $return = $_POST['idc'];
+        if(!empty($_POST)){
+            if(Tools::valideEmail($_POST['login']) == true){
+                if(UsersController::controlAccess($_POST['login'],$_POST['password'])){
+                    header('location: post/'.$return);
+                }
+            }
+        }
+    }
+
+    /**
+     * @param $id
+     */
+    public function post($id){
+        $display = new Content();
+        $comments = new Comments();
+        $tpl = new Template( 'src/view/frontend/' );
+        print $tpl->render( 'postView', array(
+                'basedir' => $_SESSION['basedir'],
+                'title' => 'Bienvenue '.$_SESSION['username'],
+                'menu' => $tpl::$frontMenu,
+                'titleSection' => 'Modifier une page',
+                'contenu' => $display->getContentById($id),
+                'commentaires' => $comments->getCommentByPost($id),
+                'return' => 'post/'.$id,
+            )
+        );
+    }
+
+    public function createComment(){
+        if(!empty($_POST['comment'])){
+            $post_id = Tools::secure($_POST['idc']);
+            $author = Tools::secure($_SESSION['adminId']);
+            $comment = Tools::secure($_POST['comment']);
+            $add = new Comments;
+            if($add->addComment($post_id,$author, $comment)){
+                header('location:formSubmit');
+            }
+            else{
+                RouterException::errorForm("Echec de soumission");
+            }
+        }
+        else{
+            RouterException::errorForm("Echec de soumission");
+        }
+    }
+
+    public function formSubmit(){
+        $tpl = new Template( 'src/view/frontend/' );
+        print $tpl->render( 'indexView', array(
+                'basedir' => $_SESSION['basedir'],
+                'title' => 'Votre formulaire a bien été soumis',
+                'menu' => $tpl::$frontMenu,
+                'titleSection' => 'Envoi de formulaire',
+                'contenu' => 'Votre formulaire a bien été soumis',
+            )
+        );
+    }
+
+    
 }
