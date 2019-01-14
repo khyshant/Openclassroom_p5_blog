@@ -158,6 +158,11 @@
                     <?php
                         ;}
                     ?>
+
+                    <div class="form-group">
+                        <label for="activate">Actif</label>
+                        <input type="checkbox"  id="activate" name="activate" <?php echo $checked_activate; ?>>
+                    </div>
                     <button type="submit" id="submit" name="submit" class="btn btn-primary" >Enregistrez vous</button>
                 </form>
 

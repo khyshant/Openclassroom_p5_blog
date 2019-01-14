@@ -368,8 +368,15 @@ class AdminController
             $meta_description = Tools::secure($_POST['meta_description']);
             $function = Tools::secure($_POST['function']);
             $comment_auth = 0;
+            if($_POST['comment_auth'] =="on"){
+                $comment_auth = 1;
+            }
+            $activate = 0;
+            if($_POST['activate'] =="on"){
+                $activate = 1;
+            }
             $page = new Pages;
-            $page->addPage($author, $function , $title, $chapo,$content,$meta_title,$meta_description,$comment_auth);
+            $page->addPage($author, $function , $title, $chapo,$content,$meta_title,$meta_description,$comment_auth,$activate);
             header('location:pageList');
         }
         else{
@@ -393,8 +400,12 @@ class AdminController
             if($_POST['comment_auth'] =="on"){
                 $comment_auth = 1;
             }
+            $activate = 0;
+            if($_POST['activate'] =="on"){
+                $activate = 1;
+            }
             $post = new Posts;
-            $post->addPost($author, $title,  $chapo,$content,$meta_title,$meta_description,$comment_auth);
+            $post->addPost($author, $title,  $chapo,$content,$meta_title,$meta_description,$comment_auth,$activate);
             header('location:postList');
         }
         else{
@@ -416,8 +427,15 @@ class AdminController
             $meta_description = Tools::secure($_POST['meta_description']);
             $function = Tools::secure($_POST['function']);
             $comment_auth = 0;
+            if($_POST['comment_auth'] =="on"){
+                $comment_auth = 1;
+            }
+            $activate = 0;
+            if($_POST['activate'] =="on"){
+                $activate = 1;
+            }
             $content = new Content;
-            $content->updateContent( $id, $author, $title, $chapo,$pageContent,$meta_title,$meta_description,$comment_auth, $function );
+            $content->updateContent( $id, $author, $title, $chapo,$pageContent,$meta_title,$meta_description,$comment_auth,$activate, $function );
             header('location:formSubmit');
         }
         else{

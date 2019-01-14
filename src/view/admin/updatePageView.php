@@ -141,6 +141,17 @@
                     <?php
                     ;}
                 ?>
+                <?php
+                    $checked_activate = 0;
+                    if($contenu['active']==1) {
+                        $checked_activate = "checked";
+                    }
+                ?>
+                <div class="form-group">
+                    <label for="activate">Actif</label>
+                    <input type="checkbox"  id="activate" name="activate" <?php echo $checked_activate; ?>>
+                </div>
+
 
                 <input type="hidden" id="idc" name="idc" value="<?php echo $contenu['id']; ?>"/>
                 <button type="submit" id="submit" name="submit" class="btn btn-primary" >Enregistrez vous</button>

@@ -62,7 +62,10 @@ class Content {
      * @var
      */
     private $_title;
-
+    /**
+     * @var
+     */
+    private $_active;
 
 
     /*Getters*/
@@ -157,6 +160,14 @@ class Content {
      * @return mixed
      */
     public function getTitle()
+    {
+        return $this->_title;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getActive()
     {
         return $this->_title;
     }
@@ -256,7 +267,13 @@ class Content {
     {
         $this->_title = $title;
     }
-
+    /**
+     * @param mixed
+     */
+    public function setActive()
+    {
+        return $this->_active;
+    }
 
     /**/
     /**
@@ -270,7 +287,7 @@ class Content {
      * @param $comment_auth
      * @param $function
      */
-    public function addContent($type, $author, $function, $title, $chapo, $content, $meta_title, $meta_description, $comment_auth)
+    public function addContent($type, $author, $function, $title, $chapo, $content, $meta_title, $meta_description, $comment_auth, $active)
     {
 
         $db = Manager::getinstance();
@@ -284,11 +301,12 @@ class Content {
         $add->setMetaTitle($meta_title);
         $add->setMetaDescription($meta_description);
         $add->setCommentAuth($comment_auth);
+        $add->setActive($active);
         $add->setDateAdd(date('y-m-d H:i:s'));
         $add->setDateUpd(date('y-m-d H:i:s'));
 
         try {
-            $sql = "INSERT INTO `posts`(`type_id`, `author`, `function` , `title`, `chapo`, `content`, `meta_title`, `meta_description`, `comment_auth`, `DATE_ADD`, `date_upd`) VALUES (:type_id, :author, :function, :title, :chapo, :content, :meta_title, :meta_description,:comment_auth,:date_add,:date_update)";
+            $sql = "INSERT INTO `posts`(`type_id`, `author`, `function` , `title`, `chapo`, `content`, `meta_title`, `meta_description`, `comment_auth`, `active`, `DATE_ADD`, `date_upd`) VALUES (:type_id, :author, :function, :title, :chapo, :content, :meta_title, :meta_description,:comment_auth, :active, :date_add,:date_update)";
             $query = $db->prepare($sql);
 
             $query->bindValue(":type_id", $add->_type, \PDO::PARAM_INT);
@@ -300,6 +318,7 @@ class Content {
             $query->bindValue(":meta_title", $add->_meta_title, \PDO::PARAM_STR);
             $query->bindValue(":meta_description", $add->_meta_description, \PDO::PARAM_STR);
             $query->bindValue(":comment_auth", $add->_comment_auth, \PDO::PARAM_INT);
+            $query->bindValue(":active", $add->_active, \PDO::PARAM_INT);
             $query->bindValue(":date_add", $add->_dateAdd);
             $query->bindValue(":date_update", $add->_date_upd);
             $query->execute();
@@ -322,7 +341,7 @@ class Content {
      * @param $comment_auth
      * @param $function
      */
-    public function updateContent($id, $author, $title, $chapo, $content, $meta_title, $meta_description, $comment_auth, $function)
+    public function updateContent($id, $author, $title, $chapo, $content, $meta_title, $meta_description, $comment_auth,$active, $function)
     {
         $db = Manager::getinstance();
         $add=new Content();
@@ -335,10 +354,11 @@ class Content {
         $add->setMetaTitle($meta_title);
         $add->setMetaDescription($meta_description);
         $add->setCommentAuth($comment_auth);
+        $add->setActive($active);
         $add->setDateUpd(date('Y-m-d H:i:s'));
 
         try {
-            $sql = 'UPDATE `posts` SET  `author`=:author, `function`=:function, `title`=:title, `chapo`=:chapo, `content`=:content, `meta_title`=:meta_title, `meta_description`=:meta_description, `comment_auth`=:comment_auth, `date_upd`=:date_update WHERE `id` = :id';
+            $sql = 'UPDATE `posts` SET  `author`=:author, `function`=:function, `title`=:title, `chapo`=:chapo, `content`=:content, `meta_title`=:meta_title, `meta_description`=:meta_description, `comment_auth`=:comment_auth, `active`=:active, `date_upd`=:date_update WHERE `id` = :id';
             $query = $db->prepare($sql);
 
             $query->bindValue(":id", $add->_id, \PDO::PARAM_INT);
@@ -350,6 +370,7 @@ class Content {
             $query->bindValue(":meta_title", $add->_meta_title, \PDO::PARAM_STR);
             $query->bindValue(":meta_description", $add->_meta_description, \PDO::PARAM_STR);
             $query->bindValue(":comment_auth", $add->_comment_auth, \PDO::PARAM_INT);
+            $query->bindValue(":active", $add->_active, \PDO::PARAM_INT);
             $query->bindValue(":date_update", date('Y-m-d H:i:s'));
             $query->execute();
         }
@@ -386,6 +407,7 @@ class Content {
                     $contentList[$content['id']]['meta_title'] = $content['meta_title'];
                     $contentList[$content['id']]['meta_description'] = $content['meta_description'];
                     $contentList[$content['id']]['comment_auth'] = $content['comment_auth'];
+                    $contentList[$content['id']]['active'] = $content['active'];
                     $contentList[$content['id']]['date_upd'] = $content['date_upd'];
                     $contentList[$content['id']]['media'] = '';
                 }
@@ -402,6 +424,7 @@ class Content {
                 $contentList[$content['id']]['meta_title'] = $content['meta_title'];
                 $contentList[$content['id']]['meta_description'] = $content['meta_description'];
                 $contentList[$content['id']]['comment_auth'] = $content['comment_auth'];
+                $contentList[$content['id']]['active'] = $content['active'];
                 $contentList[$content['id']]['date_upd'] = $content['date_upd'];
                 $contentList[$content['id']]['media'] = '';
 

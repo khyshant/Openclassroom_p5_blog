@@ -26,7 +26,7 @@ class Manager
     public static function getinstance() {
         if ((!isset($db)) || $db == null) {
             try{
-                $db = new \PDO('mysql:host=db761389328.hosting-data.io;dbname=db761389328;charset=utf8', 'dbo761389328', 'BLO_a!b_2704');
+                $db = new \PDO('mysql:host=localhost; dbname=blog', 'root', 'root');
 
             }
             catch(RouterException $e){
