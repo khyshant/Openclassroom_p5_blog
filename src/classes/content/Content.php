@@ -358,7 +358,7 @@ class Content {
         $add->setDateUpd(date('Y-m-d H:i:s'));
 
         try {
-            $sql = 'UPDATE `posts` SET  `author`=:author, `function`=:function, `title`=:title, `chapo`=:chapo, `content`=:content, `meta_title`=:meta_title, `meta_description`=:meta_description, `comment_auth`=:comment_auth, `active`=:active, `date_upd`=:date_update WHERE `id` = :id';
+            $sql = 'UPDATE `posts` SET  `author`=:author, `function`=:function, `title`=:title, `chapo`=:chapo, `content`=:content, `meta_title`=:meta_title, `meta_description`=:meta_description, `comment_auth`=:comment_auth,  `date_upd`=:date_update,`active`=:active WHERE `id` = :id';
             $query = $db->prepare($sql);
 
             $query->bindValue(":id", $add->_id, \PDO::PARAM_INT);
@@ -374,8 +374,9 @@ class Content {
             $query->bindValue(":date_update", date('Y-m-d H:i:s'));
             $query->execute();
         }
-        catch( RouterException $Exception ) {
+        catch( RouterException $Exception) {
             // Note The Typecast To An Integer!
+
             RouterException::errorForm("mise a jour de contenu");
         }
     }
