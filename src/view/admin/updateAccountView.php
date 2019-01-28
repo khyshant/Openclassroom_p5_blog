@@ -119,5 +119,23 @@
 
   </script>
 <script type="text/javascript" src="<?php echo $basedir ; ?>public/js/base.js"></script>
+<script>
+    $("#page").submit(function() {
+        grecaptcha.ready(function () {
+            grecaptcha.execute('6LfJw4kUAAAAAEvPggQ8_9AfPXia3_vj1js_vjbv', {action: 'addPage'})
+                .then(function (token) {
+// Validez le jeton sur le serveur.
+                });
+        });
+    }
+    $("#post").submit(function() {
+        grecaptcha.ready(function () {
+            grecaptcha.execute('6LfJw4kUAAAAAEvPggQ8_9AfPXia3_vj1js_vjbv', {action: 'addPost'})
+                .then(function (token) {
+// Validez le jeton sur le serveur.
+                });
+        });
+    }
+</script>
 </body>
 </html>

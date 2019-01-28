@@ -1,4 +1,6 @@
-
+<?php
+use App\classes\Tools;
+?>
 <!doctype html>
 <html lang="fr">
 <head>
@@ -76,17 +78,20 @@
     </div>
     <section class="col-md-6 offset-md-6">
         <h1 class="col-md-12 text-center"><?php echo  htmlentities($title); ?></h1>
-         <form id="test" method="post" action="formlogin">
-           <div class="form-group">
-            <label for="exampleInputEmail1">Email address</label>
-            <input type="email" class="form-control" id="login" name="login" aria-describedby="emailHelp" placeholder="<?php if(isset($login)){echo $login;}else{echo "your email";}?>">
-          </div>
-          <div class="form-group">
-            <label for="exampleInputPassword1">Password</label>
-            <input type="password" class="form-control" id="password" name="password" placeholder="Password">
-          </div>
-          <input type="submit" value="Connectez vous">
-        </form>
+        <?php if(!tools::ValidForm()){ ?>
+            <form id="login" method="post" action="formlogin">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Email address</label>
+                    <input type="email" class="form-control" id="login" name="login" aria-describedby="emailHelp" placeholder="<?php if(isset($login)){echo $login;}else{echo "your email";}?>">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                </div>
+                <input type="submit" value="Connectez vous">
+            </form>
+
+        <?php ;} ?>
         <a href="../userAccount" id="" class=" ">Créer un compte</a>
        
         
@@ -156,5 +161,15 @@
         }
     }
   </script>
+    <script>
+        $("#login").submit(function() {
+            grecaptcha.ready(function () {
+                grecaptcha.execute('6LfJw4kUAAAAAEvPggQ8_9AfPXia3_vj1js_vjbv', {action: 'formlogin'})
+                    .then(function (token) {
+// Validez le jeton sur le serveur.
+                    });
+            });
+        }
+    </script>
 </body>
 </html>

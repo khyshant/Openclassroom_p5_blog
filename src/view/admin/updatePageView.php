@@ -94,7 +94,7 @@
     <h1 class="col-md-12 text-center"><?php echo $title; ?></h1>
     <article id="contenu" class="col-md-12">
         <h2 class="titre_article"> </h2>
-            <form id="test" method="post" action="../updatePageOrPost">
+            <form id="updateContent" method="post" action="../updatePageOrPost">
 
                 <div class="form-group">
                     <label for="lastname">title</label>
@@ -235,5 +235,16 @@
         }
     }
     </script>
+<script>
+    $("#updateContent").submit(function() {
+        grecaptcha.ready(function () {
+            grecaptcha.execute('6LfJw4kUAAAAAEvPggQ8_9AfPXia3_vj1js_vjbv', {action: 'updatePageOrPost'})
+                .then(function (token) {
+// Validez le jeton sur le serveur.
+                });
+        });
+    }
+
+</script>
 </body>
 </html>
