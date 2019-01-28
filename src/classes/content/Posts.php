@@ -61,9 +61,10 @@ class Posts extends Content {
         $posts = $contents->listContent(2);
         $display = "<ul>";
         foreach($posts as $post){
-            $display.="<li><a href='".$content."/".$post['id']."' title='".$post['title']."'>".$post['title']."</a></li>";
+            $display.="<li>
+                <a href='".$content."/".$post['id']."' title='".$post['title']."'>".$post['title']."</a></li>";
         }
         $display .= "</ul>";
-        return $display;
+        return $posts;
     }
 }

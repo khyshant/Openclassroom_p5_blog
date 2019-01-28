@@ -1,3 +1,6 @@
+body {
+    height: 100%
+}
 .personnal_grid{
     display : grid; 
     position : fixed;
@@ -145,7 +148,7 @@ pg-item>a{
 }
 
 #openNav, #closeNav{
-    position:absolute;
+    position:fixed;
     bottom:15px;
     left:15px;
     z-index:1001;
@@ -194,7 +197,7 @@ pg-item>a{
     display: none;
 }
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 775px) {
     .topnav{
         display : block
     }
@@ -240,4 +243,13 @@ pg-item>a{
     padding:10px;    
     text-align:justify;
     margin-bottom: 10px;
+
+}
+#contenu p
+{
+    padding-left: 15px;
+    padding-righjt: 15px;
+    text-align:justify;
+    margin-bottom: 5px;
+
 }

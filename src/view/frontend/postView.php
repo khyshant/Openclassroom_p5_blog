@@ -103,12 +103,14 @@
                 <?php echo $contenu['date_upd']; ?>
             </span>
         </article>
+        <div class="col-12">
         <?php
         foreach($commentaires as $commentaire){
             echo '<div class="commentaire"><p>'.$commentaire['comment'].'</p><span class="add_info">Par : '.$commentaire['author'].' le '.$commentaire['date_add'].' </span></div>';
 
         }
         ?>
+        </div>
         <?php
             if(!empty($_SESSION['username']) && !empty($_SESSION['adminId'])){
                 ?>
@@ -132,7 +134,7 @@
                     </div>
                     <div class="form-group">
                         <label for="password">Mot de passe</label>
-                        <input type="text" class="form-control required" id="password" name="password" placeholder="Email" value="">
+                        <input type="text" class="form-control required" id="password" name="password" placeholder="pass" value="">
                     </div>
                     <input type="hidden" id="idc" name="idc" value="<?php echo $contenu['id']; ?>"/>
                     <button type="submit" id="submit" name="submit" class="btn btn-primary" >Connectez vous pour poster un commentaire</button>

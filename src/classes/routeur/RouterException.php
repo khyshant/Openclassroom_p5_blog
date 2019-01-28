@@ -24,7 +24,7 @@ class RouterException extends \Exception{
     public static function getErrorMenu(){
         $menu = array(
             'page1' => 'Retour a l\'accueil',
-            'lien1' => '../',
+            'lien1' => $_SESSION['basedir'],
         );
         if(Tools::getSessionIsset('adminUser'))
         {

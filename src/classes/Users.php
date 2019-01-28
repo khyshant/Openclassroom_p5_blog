@@ -299,12 +299,11 @@ class Users {
      */
     Public function getAuthor($id){
         $db = Manager::getinstance();
-
-        $users = $db->prepare('SELECT * FROM user WHERE id =:id  limit 1');
-        $users->bindParam(':id', $id, \PDO::PARAM_INT);
+        $users = $db->prepare('SELECT `firstname`,`lastname` FROM user WHERE `id_user` =:id_user limit 1');
+        $users->bindParam(':id_user', $id,\PDO::PARAM_INT, 13);
+        $users->fetch(\PDO::FETCH_OBJ);
         $users->execute();
-        $users->fetch(\PDO::FETCH_ASSOC);
-        $author ="";
+        $author="";
         foreach($users as $user){
             $author = $user['firstname'] .' '.  $user['lastname'];
         }
@@ -335,9 +334,10 @@ class Users {
             $display.="<li><a href='user/".$user['id_user']."' title='Voir'>".$user['lastname']." ".$user['firstname']."</a></li>";
             }
 
-
+            print_r($param);
             $display .= "</ul>";
         if($param == "list"){
+
             return $display;
         }
         else{

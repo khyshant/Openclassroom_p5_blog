@@ -83,19 +83,24 @@
 </div>
     <section class="col-md-6 offset-md-6">
         <h1 class="col-md-12 text-center"><?php echo $title; ?></h1>
-        <article id="contenu" class="col-md-12">
-            <h2 class="titre_article">
+        <article id="contenu" class="row">
+            <h2 class="text-center col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                 <?php echo $contenu['title']; ?>
             </h2>
-            <p class="content">
+                <?php echo $contenu['chapo']; ?>
                 <?php echo $contenu['content']; ?>
-            </p>
+
         </article>
 
 
        
         
     </section>
+    <footer class="col-md-6 offset-md-6 text-center">
+        <div>
+            <a href="<?php echo $basedir; ?>Mention" alt="Mentions légales">Mentions légales</a>
+        </div>
+    </footer>
     <button id="openNav" class="d-block"><i class="fa fa-eye"></i></button>
     <button id="closeNav"  class="d-none"><i class="fa fa-eye-slash"></i></button>
     <script>

@@ -51,6 +51,9 @@ class FrontController{
                 case "Presentation" :
                     $this->seeMe();
                     break;
+                case "Mention" :
+                    $this->mention();
+                    break;
                 case "userAccount" :
                     $this->createAccount();
                     break;
@@ -139,9 +142,9 @@ class FrontController{
     public function seeCompetence(){
         $display = new Pages();
         $tpl = new Template( 'src/view/frontend/' );
-        print $tpl->render( 'indexView', array(
+        print $tpl->render( 'pageView', array(
                 'basedir' => $_SESSION['basedir'],
-                'title' => 'Ce que je crois connaitre',
+                'title' => 'Compétences',
                 'menu' => $tpl::$frontMenu,
                 'contenu' => $display->getPageByFn("seeCompetence"),
             )
@@ -151,11 +154,11 @@ class FrontController{
     public function seePortfolio(){
         $display = new Pages();
         $tpl = new Template( 'src/view/frontend/' );
-        print $tpl->render( 'indexView', array(
+        print $tpl->render( 'pageView', array(
                 'basedir' => $_SESSION['basedir'],
                 'title' => 'Ce que je connais',
                 'menu' => $tpl::$frontMenu,
-                'contenu' => $display->getPageByFn("contactUs"),
+                'contenu' => $display->getPageByFn("seePortfolio"),
             )
         );
     }
@@ -163,7 +166,7 @@ class FrontController{
     public function seeMe(){
         $display = new Pages();
         $tpl = new Template( 'src/view/frontend/' );
-        print $tpl->render( 'indexView', array(
+        print $tpl->render( 'pageView', array(
                 'basedir' => $_SESSION['basedir'],
                 'title' => 'Qui suis je ?',
                 'menu' => $tpl::$frontMenu,
@@ -171,6 +174,18 @@ class FrontController{
             )
         );
     }
+    public function mention(){
+        $display = new Pages();
+        $tpl = new Template( 'src/view/frontend/' );
+        print $tpl->render( 'pageView', array(
+                'basedir' => $_SESSION['basedir'],
+                'title' => 'Mentions Légales',
+                'menu' => $tpl::$frontMenu,
+                'contenu' => $display->getPageByFn("mention"),
+            )
+        );
+    }
+
 
     public function validAccount(){
 
@@ -216,12 +231,24 @@ class FrontController{
 
     public function controlAccess(){
         $return = $_POST['idc'];
+        print_r($_POST);
         if(!empty($_POST)){
+            echo 'ici';
             if(Tools::valideEmail($_POST['login']) == true){
+                echo 'la';
                 if(UsersController::controlAccess($_POST['login'],$_POST['password'])){
                     header('location: post/'.$return);
                 }
+                else{
+                    RouterException::errorForm("compte invalide");
+                }
             }
+            else{
+                RouterException::errorForm("Mail invalide");
+            }
+        }
+        else{
+            RouterException::errorForm("CODE P-100-V");
         }
     }
 
@@ -234,10 +261,10 @@ class FrontController{
         $tpl = new Template( 'src/view/frontend/' );
         print $tpl->render( 'postView', array(
                 'basedir' => $_SESSION['basedir'],
-                'title' => 'Bienvenue '.$_SESSION['username'],
+                'title' => 'Section blog'  ,
                 'menu' => $tpl::$frontMenu,
                 'titleSection' => 'Modifier une page',
-                'contenu' => $display->getContentById($id),
+                'contenu' => $display->getContentById($id,2),
                 'commentaires' => $comments->getCommentByPost($id),
                 'return' => 'post/'.$id,
             )

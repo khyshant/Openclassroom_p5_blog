@@ -102,7 +102,7 @@ class AdminController
             $this->controlAccess();
         } else {
             $contents = new Content;
-            $page = $contents->listContent(false);
+            $page = $contents->listContent(1);
             if (isset($page[$id])) {
                 $this->page($id);
             } else {
@@ -202,7 +202,7 @@ class AdminController
                 'title' => 'Bienvenue '.$_SESSION['username'],
                 'menu' => $tpl::$adminMenu,
                 'titleSection' => 'Modifier une page',
-                'contenu' => $display->getContentById($id),
+                'contenu' => $display->getContentById($id,1),
                 'add_a_page' => 'createPage',
             )
         );
@@ -360,21 +360,28 @@ class AdminController
      */
     public function addPage(){
         if($_SESSION['adminUser'] == "authentificate"){
-            $title = Tools::secure($_POST['title']);
+            $title = Tools::secure(strip_tags($_POST['title']));
             $author = Tools::secure($_SESSION['adminId']);
-            $chapo = Tools::secure($_POST['chapo']);
+            $chapo = Tools::secure(strip_tags($_POST['chapo']));
             $content = Tools::secure($_POST['content']);
-            $meta_title = Tools::secure($_POST['meta_title']);
-            $meta_description = Tools::secure($_POST['meta_description']);
+            $meta_title = Tools::secure(strip_tags($_POST['meta_title']));
+            $meta_description = Tools::secure(strip_tags($_POST['meta_description']));
             $function = Tools::secure($_POST['function']);
             $comment_auth = 0;
-            if($_POST['comment_auth'] =="on"){
-                $comment_auth = 1;
+            if(isset($_POST['comment_auth'])){
+                if($_POST['comment_auth'] =="on"){
+                    $comment_auth = 1;
+                }
+
             }
             $activate = 0;
-            if($_POST['activate'] =="on"){
-                $activate = 1;
+            if(isset($_POST['comment_auth'])){
+
+                if($_POST['activate'] =="on"){
+                    $activate = 1;
+                }
             }
+
             $page = new Pages;
             $page->addPage($author, $function , $title, $chapo,$content,$meta_title,$meta_description,$comment_auth,$activate);
             header('location:pageList');
@@ -434,6 +441,7 @@ class AdminController
             if($_POST['activate'] =="on"){
                 $activate = 1;
             }
+
             $content = new Content;
             $content->updateContent( $id, $author, $title, $chapo,$pageContent,$meta_title,$meta_description,$comment_auth,$activate, $function );
             header('location:formSubmit');

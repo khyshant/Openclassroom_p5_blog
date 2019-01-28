@@ -5,9 +5,8 @@ $dir=str_replace('index.php','',$dir);
 
 new \App\classes\Session();
 $_SESSION['basedir']=$dir;
-
 // Afficher les erreurs à l'écran
-//ini_set('display_errors', 1);
+ini_set('display_errors', 1);
 // Enregistrer les erreurs dans un fichier de log
 //ini_set('log_errors', 1);
 // Nom du fichier qui enregistre les logs (attention aux droits à l'écriture)

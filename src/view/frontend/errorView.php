@@ -35,11 +35,22 @@
                 </div>
             </div>
         </a>
-        <a href="<?php echo $menu['lien2'] ?>" id="pg4" class="pg_item pg_item_bg_4">
+        <?php
+        if(isset($_SESSION['adminUser']))
+        {
+            $lien2 = $menu['lien2'];
+            $page2=$menu['page2'];
+        }
+        else {
+            $lien2 = "javascript:void(0);";
+            $page2="";
+        }
+        ?>
+        <a href="<?php echo $lien2; ?>" id="pg4" class="pg_item pg_item_bg_4">
             <div class="pg_mask">
                 <div href="#" class="inner-wrap">
                     <div class="pg_item-content pg_item-inner">
-                        <h4> <?php echo $menu['page2']; ?></h4>
+                        <h4> <?php echo $page2; ?></h4>
                     </div>
                 </div>
             </div>

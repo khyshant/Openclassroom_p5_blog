@@ -270,9 +270,9 @@ class Content {
     /**
      * @param mixed
      */
-    public function setActive()
+    public function setActive($active)
     {
-        return $this->_active;
+        return $this->_active  = $active;
     }
 
     /**/
@@ -356,9 +356,8 @@ class Content {
         $add->setCommentAuth($comment_auth);
         $add->setActive($active);
         $add->setDateUpd(date('Y-m-d H:i:s'));
-
         try {
-            $sql = 'UPDATE `posts` SET  `author`=:author, `function`=:function, `title`=:title, `chapo`=:chapo, `content`=:content, `meta_title`=:meta_title, `meta_description`=:meta_description, `comment_auth`=:comment_auth,  `date_upd`=:date_update,`active`=:active WHERE `id` = :id';
+            $sql = 'UPDATE `posts` SET  `author`=:author, `function`=:function, `title`=:title, `chapo`=:chapo, `content`=:content, `meta_title`=:meta_title, `meta_description`=:meta_description, `comment_auth`=:comment_auth, `active`=:active , `date_upd`=:date_update WHERE `id` = :id';
             $query = $db->prepare($sql);
 
             $query->bindValue(":id", $add->_id, \PDO::PARAM_INT);
@@ -389,11 +388,14 @@ class Content {
     {
         $db = Manager::getinstance();
         $contentList = array();
-        $contents = $db->prepare('SELECT * FROM `posts`;') ;
+        if($type_id==1){
+            $contents = $db->prepare('SELECT * FROM `posts`') ;
+        }
+        else{
+            $contents = $db->prepare('SELECT * FROM `posts` WHERE `active` = 1;') ;
+        }
         $contents->fetch(\PDO::FETCH_OBJ);
         $contents->execute();
-
-
         foreach($contents as $content){
             if($type_id){
                 if($content['type_id']==$type_id){
@@ -440,10 +442,10 @@ class Content {
      * @param $id
      * @return mixed
      */
-    public function getContentById($id)
+    public function getContentById($id,$type)
     {
         $contents = new Content;
-        $contents = $contents->listContent(false);
+        $contents = $contents->listContent($type);
         return $contents[(int)$id];
     }
 }

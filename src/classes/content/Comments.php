@@ -207,8 +207,9 @@ class Comments {
         $commentList = array();
         $comments = $db->prepare('SELECT * FROM `comments` WHERE `post_id` = :post_id  AND `authorized` = 1;') ;
         $comments->bindValue(":post_id", $add->postId(), \PDO::PARAM_INT);
+        $comments->fetch(\PDO::FETCH_OBJ);
         $comments->execute();
-        $comments->fetch(\PDO::FETCH_ASSOC);
+
         foreach($comments as $comment){
             $author = new Users;
             $commentList[$comment['id']]['id'] = $comment['id'];

@@ -23,11 +23,11 @@
 </head>
 <body>
 <nav  id="myTopnav" class="topnav ">
-    <a  href="<?php echo htmlentities($menu['lien1']); ?>"><?php echo htmlentities($menu['page1']); ?></a>
-    <a  href="<?php echo htmlentities($menu['lien2']); ?>"><?php echo htmlentities($menu['page2']); ?></a>
-    <a  href="<?php echo htmlentities($menu['lien3']); ?>"><?php echo htmlentities($menu['page3']); ?></a>
-    <a  href="<?php echo htmlentities($menu['lien4']); ?>"><?php echo htmlentities($menu['page4']); ?></a>
-    <a  href="<?php echo htmlentities($menu['lien5']); ?>"><?php echo htmlentities($menu['page5']); ?></a>
+    <a  href="<?php echo htmlentities($basedir.'/admin/'.$menu['lien1']); ?>"><?php echo htmlentities($menu['page1']); ?></a>
+    <a  href="<?php echo htmlentities($basedir.'/admin/'.$menu['lien2']); ?>"><?php echo htmlentities($menu['page2']); ?></a>
+    <a  href="<?php echo htmlentities($basedir.'/admin/'.$menu['lien3']); ?>"><?php echo htmlentities($menu['page3']); ?></a>
+    <a  href="<?php echo htmlentities($basedir.'/admin/'.$menu['lien4']); ?>"><?php echo htmlentities($menu['page4']); ?></a>
+    <a  href="<?php echo htmlentities($basedir.'/admin/'.$menu['lien5']); ?>"><?php echo htmlentities($menu['page5']); ?></a>
     <a href="javascript:void(0);" class="icon" onclick="myFunction()">
         <i class="fa fa-bars"></i>
     </a>
@@ -38,7 +38,7 @@
     </div>
     <div id="pg2" class="pg_item pg_item_bg_2">
     </div>
-    <a href="<?php echo htmlentities($menu['lien1']); ?>" id="pg3" class="pg_item pg_item_bg_3">
+    <a href="<?php echo htmlentities($basedir.'/admin/'.$menu['lien1']); ?>" id="pg3" class="pg_item pg_item_bg_3">
         <div class="pg_mask">
             <div href="#" class="inner-wrap">
                 <div class="pg_item-content pg_item-inner">
@@ -48,7 +48,7 @@
             </div>
         </div>
     </a>
-    <a href="<?php echo htmlentities($menu['lien2']) ?>" id="pg4" class="pg_item pg_item_bg_4">
+    <a href="<?php echo htmlentities($basedir.'/admin/'.$menu['lien2']) ?>" id="pg4" class="pg_item pg_item_bg_4">
         <div class="pg_mask">
             <div href="#" class="inner-wrap">
                 <div class="pg_item-content pg_item-inner">
@@ -58,7 +58,7 @@
             </div>
         </div>
     </a>
-    <a href="<?php echo htmlentities($menu['lien3']); ?>" id="pg5" class="pg_item pg_item_bg_5">
+    <a href="<?php echo htmlentities($basedir.'/admin/'.$menu['lien3']); ?>" id="pg5" class="pg_item pg_item_bg_5">
         <div class="pg_mask">
             <div href="#" class="inner-wrap">
                 <div class="pg_item-content pg_item-inner">
@@ -68,7 +68,7 @@
             </div>
         </div>
     </a>
-    <a href="<?php echo $menu['lien4']; ?>" id="pg6" class="pg_item pg_item_bg_6">
+    <a href="<?php echo $basedir.'/admin/'.$menu['lien4']; ?>" id="pg6" class="pg_item pg_item_bg_6">
         <div class="pg_mask">
             <div href="#" class="inner-wrap">
                 <div class="pg_item-content pg_item-inner">
@@ -78,7 +78,7 @@
             </div>
         </div>
     </a>
-    <a href="<?php echo htmlentities($menu['lien5']); ?>" id="pg7" class="pg_item pg_item_bg_7">
+    <a href="<?php echo htmlentities($basedir.'/admin/'.$menu['lien5']); ?>" id="pg7" class="pg_item pg_item_bg_7">
         <div class="pg_mask">
             <div href="#" class="inner-wrap">
                 <div class="pg_item-content pg_item-inner">
@@ -126,6 +126,7 @@
                             <option value="seeCompetence">Compétences</option>
                             <option value="seePortfolio">Portfolio</option>
                             <option value="seeMe">Présentation</option>
+                            <option value="mention">Mentions légales</option>
                         </select>
                     </div>
                 <?php
@@ -161,7 +162,7 @@
 
                     <div class="form-group">
                         <label for="activate">Actif</label>
-                        <input type="checkbox"  id="activate" name="activate" <?php echo $checked_activate; ?>>
+                        <input type="checkbox"  id="activate" name="activate" >
                     </div>
                     <button type="submit" id="submit" name="submit" class="btn btn-primary" >Enregistrez vous</button>
                 </form>
@@ -189,9 +190,9 @@
             $("#openNav").removeClass("d-none");
         });
 
-        $('#chapo').summernote(
+        $('#title').summernote(
             {
-                placeholder: 'Saisissez ici votre chapo et mettez le en page',
+                enterHtml: 'Saisissez ici votre chapo et mettez le en page',
             }
         );
         $('#content').summernote(

@@ -87,22 +87,50 @@
                 if(isset($add_a_page))
                 {
             ?>
-                <a href="<?php echo  htmlentities($add_a_page); ?>" class="pull-right btn btn-primary" >Ajouter une page</a>
+                    <div class="col-12">
+                        <a  href="<?php echo  htmlentities($add_a_page); ?>" class="pull-right btn btn-primary" >Ajouter une page</a>
+                    </div>
+
+                    <div class="clearfix"></div>
+                <p class="content">
+                    <?php echo  $contenu; ?>
+                </p>
             <?php
                 ;}
-            ?>
-            <?php
-                if(isset($add_a_post))
+                 else if(isset($add_a_post))
                 {
             ?>
-                <a href="<?php echo  htmlentities($add_a_post); ?>" class="pull-right btn btn-primary" >Ajouter un billet</a>
+                    <div class="col-12">
+                        <a href="<?php echo  htmlentities($add_a_post); ?>" class="pull-right btn btn-primary" >Ajouter un billet</a>
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                <div class="clearfix"></div>
+                    <ul id="contenu" class="col-12">
+                        <?php
+                        foreach($contenu as $post){
+                            $html = '<li class="row pb-5" >';
+                            $html .= '<div class="col-12" style=": 1px solid grey">';
+                            $html .='<h4 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 "><u>'.$post['title'].'</u></h4>';
+                            $html .='<p class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 pb-0">'.$post['chapo'].'</p>';
+                            $html .='<span class="pl-3"><u>Modifié le '.$post['date_upd'].' par '.$post['author'].'</u> </span>';
+                            $html .='<a class="pull-right" href="page/'.$post['id'].'" alt="lire"> Lire</a>';
+                            $html .= '</div>';
+                            $html .= '<div class="clearfix"</div>';
+                            $html .= '<hr/>';
+                            $html .= '</li>';
+                            echo $html;
+                        }
+
+                        ?>
+                    </ul>
             <?php
                 ;}
+                else{
+                    echo  $contenu;
+                }
             ?>
-            <p class="content">
-                <?php echo  $contenu; ?>
-            </p>
-
         </article>
        
         

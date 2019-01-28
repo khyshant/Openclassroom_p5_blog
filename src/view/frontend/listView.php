@@ -82,28 +82,24 @@
 </div>
     <section class="col-md-6 offset-md-6">
         <h1 class="col-md-12 text-center"><?php echo $title; ?></h1>
-        <article id="contenu" class="col-md-12">
-            <?php
-                if(isset($add_a_page))
-                {
-            ?>
-                <a href="<?php echo $add_a_page; ?>" class="pull-right btn btn-primary" >Ajouter une page</a>
-            <?php
-                ;}
-            ?>
-            <?php
-                if(isset($add_a_post))
-                {
-            ?>
-                <a href="<?php echo $add_a_post; ?>" class="pull-right btn btn-primary" >Ajouter un billet</a>
-            <?php
-                ;}
-            ?>
-            <p class="content">
-                <?php echo $contenu; ?>
-            </p>
+        <ul id="contenu" class="col-md-12">
+                <?php
+                foreach($contenu as $post){
+                    $html = '<li class="row pb-2">';
+                    $html .= '<div class="col-12" style=": 1px solid grey">';
+                    $html .='<h4 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 "><u>'.$post['title'].'</u></h4>';
+                    $html .='<p class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 pb-0">'.$post['chapo'].'</p>';
+                    $html .='<span class="col-xs-10 col-sm-10 col-md-10 col-lg-10 col-xl-10 "><u>Modifié le '.$post['date_upd'].' par '.$post['author'].'</u> </span>';
+                    $html .='<a class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 btn btn-secundary" href="post/'.$post['id'].'" alt="lire"> Lire</a>';
+                    $html .= '</div>';
+                    $html .= '<div class="clearfix"</div>';
+                    $html .= '<hr/>';
+                    $html .= '</li>';
+                    echo $html;
+                }
 
-        </article>
+                ?>
+        </ul>
        
         
     </section>
