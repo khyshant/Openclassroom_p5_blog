@@ -20,7 +20,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.js"></script>
-    <script src='https://www.google.com/recaptcha/api.js?render=6LfJw4kUAAAAAEvPggQ8_9AfPXia3_vj1js_vjbv'></script>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
 </head>
 <body>
 <nav  id="myTopnav" class="topnav ">
@@ -154,6 +154,7 @@
 
 
                 <input type="hidden" id="idc" name="idc" value="<?php echo $contenu['id']; ?>"/>
+                <div class="g-recaptcha" data-sitekey="6Lc5a40UAAAAALZnQK1jAgrQXZkQmmuUO-dmqf5W"></div>
                 <button type="submit" id="submit" name="submit" class="btn btn-primary" >Enregistrez vous</button>
             </form>
     </article>
@@ -235,16 +236,5 @@
         }
     }
     </script>
-<script>
-    $("#updateContent").submit(function() {
-        grecaptcha.ready(function () {
-            grecaptcha.execute('6LfJw4kUAAAAAEvPggQ8_9AfPXia3_vj1js_vjbv', {action: 'updatePageOrPost'})
-                .then(function (token) {
-// Validez le jeton sur le serveur.
-                });
-        });
-    }
-
-</script>
 </body>
 </html>

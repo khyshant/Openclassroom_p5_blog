@@ -5,7 +5,7 @@
     <title>test css</title>
     <link rel='shortcut icon' href='favicon.ico' type='image/x-icon' />
 <link rel="stylesheet" type="text/css" href="<?php echo htmlentities($basedir) ; ?>public/css/base.css" />
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
 
 
 
@@ -113,6 +113,7 @@
                 </div>
                 <input type="hidden" id="idc" name="idc" value="<?php echo $contenu['id']; ?>"/>
                 <button type="submit" id="submit" name="submit" class="btn btn-primary" >Enregistrez vous</button>
+                <div class="g-recaptcha" data-sitekey="6Lc5a40UAAAAALZnQK1jAgrQXZkQmmuUO-dmqf5W"></div>
             </form>
     </article>
 
@@ -195,16 +196,6 @@
         }
     }
   </script>
-<script>
-    $("#update").submit(function() {
-        grecaptcha.ready(function () {
-            grecaptcha.execute('6LfJw4kUAAAAAEvPggQ8_9AfPXia3_vj1js_vjbv', {action: 'updateComment'})
-                .then(function (token) {
-// Validez le jeton sur le serveur.
-                });
-        });
-    }
 
-</script>
 </body>
 </html>
