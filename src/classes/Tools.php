@@ -229,28 +229,26 @@ class Tools {
         return false;
     }
 
-    public static function ValidForm(){
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    public static function isRecaptcha(){
+        $data = array(
+            'secret' => "6Lc5a40UAAAAAEUtCgF_OyxMpKcu16bIjvbdSmC3",
+            'response' => $_POST['g-recaptcha-response']
+        );
 
-            // Build POST request:
-            $recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify';
-            $recaptcha_secret = '6LfJw4kUAAAAAEISotZ01OftaTTHoYq0WZMkutc-';
-            $recaptcha_response = $_POST['recaptcha_response'];
+        $verify = curl_init();
+        curl_setopt($verify, CURLOPT_URL, "https://www.google.com/recaptcha/api/siteverify");
+        curl_setopt($verify, CURLOPT_POST, true);
+        curl_setopt($verify, CURLOPT_POSTFIELDS, http_build_query($data));
+        curl_setopt($verify, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($verify, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($verify);
 
-            // Make and decode POST request:
-            $recaptcha = file_get_contents($recaptcha_url . '?secret=' . $recaptcha_secret . '&response=' . $recaptcha_response);
-            $recaptcha = json_decode($recaptcha);
-            print_r($recaptcha);
-            // Take action based on the score returned:
-            if ($recaptcha->score >= 0.5) {
-                print_r($_POST);
-                return true;
-            } else {
-                print_r($_POST);
-                return false;
-            }
+        $response = json_decode($response, true);
+        if(isset($response) && $response['success'] ==true){
+            return true;
+        }
+        else{
+            return false;
         }
     }
-
-
 }

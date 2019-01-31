@@ -97,7 +97,7 @@
                 if(isset($add_a_page))
                 {
                     ?>
-                    <form id="page" name="page" method="post" action="addPage">
+                    <form id="test" method="post" action="addPage">
                     <?php
                     ;}
                 ?>
@@ -105,7 +105,7 @@
                 if(isset($add_a_post))
                 {
                     ?>
-                        <form id="post" name="post" method="post" action="addPost">
+                        <form id="test" method="post" action="addPost">
                     <?php
                     ;}
                 ?>
@@ -247,23 +247,5 @@
         }
     }
   </script>
-<script>
-    $("#page").submit(function() {
-        grecaptcha.ready(function () {
-            grecaptcha.execute('6LfJw4kUAAAAAEvPggQ8_9AfPXia3_vj1js_vjbv', {action: 'addPage'})
-                .then(function (token) {
-// Validez le jeton sur le serveur.
-                });
-        });
-    }
-    $("#post").submit(function() {
-        grecaptcha.ready(function () {
-            grecaptcha.execute('6LfJw4kUAAAAAEvPggQ8_9AfPXia3_vj1js_vjbv', {action: 'addPost'})
-                .then(function (token) {
-// Validez le jeton sur le serveur.
-                });
-        });
-    }
-</script>
 </body>
 </html>
