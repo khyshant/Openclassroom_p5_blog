@@ -15,7 +15,6 @@ use \App\classes\content\Content ;
 use \App\classes\Tools ;
 use \App\classes\Template;
 use \App\classes\routeur\RouterException;
-
 /**
  * Class AdminController
  * @package App\Controller
@@ -174,10 +173,14 @@ class AdminController
        $test = new Users();
        $test->createUser(1,'Blanchard', 'Anthony', 'anth.blanchard@gmail.com', '27-07-1977', $securePwd['pwd'], $securePwd['salt']);
         */
-        if(!empty($_POST)){
-            if(Tools::valideEmail($_POST['login']) == true){
-                if(UsersController::controlAccess($_POST['login'],$_POST['password'])){
-                    header('location:home');
+        if(!empty($_POST)) {
+            if (Tools::isRecaptcha()) {
+                if (Tools::valideEmail($_POST['login']) == true) {
+                    if (UsersController::controlAccess($_POST['login'], $_POST['password'])) {
+                        header('location:home');
+                    }
+                } else {
+                    $content = 'Recaptcha non validé par google';
                 }
             }
         }
@@ -359,35 +362,39 @@ class AdminController
      *
      */
     public function addPage(){
-        if($_SESSION['adminUser'] == "authentificate"){
-            $title = Tools::secure(strip_tags($_POST['title']));
-            $author = Tools::secure($_SESSION['adminId']);
-            $chapo = Tools::secure(strip_tags($_POST['chapo']));
-            $content = Tools::secure($_POST['content']);
-            $meta_title = Tools::secure(strip_tags($_POST['meta_title']));
-            $meta_description = Tools::secure(strip_tags($_POST['meta_description']));
-            $function = Tools::secure($_POST['function']);
-            $comment_auth = 0;
-            if(isset($_POST['comment_auth'])){
-                if($_POST['comment_auth'] =="on"){
-                    $comment_auth = 1;
+        if (Tools::isRecaptcha()) {
+            if ($_SESSION['adminUser'] == "authentificate") {
+                $title = Tools::secure(strip_tags($_POST['title']));
+                $author = Tools::secure($_SESSION['adminId']);
+                $chapo = Tools::secure(strip_tags($_POST['chapo']));
+                $content = Tools::secure($_POST['content']);
+                $meta_title = Tools::secure(strip_tags($_POST['meta_title']));
+                $meta_description = Tools::secure(strip_tags($_POST['meta_description']));
+                $function = Tools::secure($_POST['function']);
+                $comment_auth = 0;
+                if (isset($_POST['comment_auth'])) {
+                    if ($_POST['comment_auth'] == "on") {
+                        $comment_auth = 1;
+                    }
+
+                }
+                $activate = 0;
+                if (isset($_POST['comment_auth'])) {
+
+                    if ($_POST['activate'] == "on") {
+                        $activate = 1;
+                    }
                 }
 
+                $page = new Pages;
+                $page->addPage($author, $function, $title, $chapo, $content, $meta_title, $meta_description, $comment_auth, $activate);
+                header('location:pageList');
+            } else {
+                RouterException::errorForm("Vous n'êtes pas authentifié");
             }
-            $activate = 0;
-            if(isset($_POST['comment_auth'])){
-
-                if($_POST['activate'] =="on"){
-                    $activate = 1;
-                }
-            }
-
-            $page = new Pages;
-            $page->addPage($author, $function , $title, $chapo,$content,$meta_title,$meta_description,$comment_auth,$activate);
-            header('location:pageList');
         }
-        else{
-            RouterException::errorForm("Vous n'êtes pas authentifié");
+        else {
+            RouterException::errorForm("Recaptcha invalidé par google");
         }
 
     }
@@ -396,27 +403,31 @@ class AdminController
      *
      */
     public function addPost(){
-        if($_SESSION['adminUser'] == "authentificate"){
-            $title = Tools::secure($_POST['title']);
-            $author = Tools::secure($_SESSION['adminId']);
-            $chapo = Tools::secure($_POST['chapo']);
-            $content = Tools::secure($_POST['content']);
-            $meta_title = Tools::secure($_POST['meta_title']);
-            $meta_description = Tools::secure($_POST['meta_description']);
-            $comment_auth = 0;
-            if($_POST['comment_auth'] =="on"){
-                $comment_auth = 1;
+        if (Tools::isRecaptcha()) {
+            if ($_SESSION['adminUser'] == "authentificate") {
+                $title = Tools::secure($_POST['title']);
+                $author = Tools::secure($_SESSION['adminId']);
+                $chapo = Tools::secure($_POST['chapo']);
+                $content = Tools::secure($_POST['content']);
+                $meta_title = Tools::secure($_POST['meta_title']);
+                $meta_description = Tools::secure($_POST['meta_description']);
+                $comment_auth = 0;
+                if ($_POST['comment_auth'] == "on") {
+                    $comment_auth = 1;
+                }
+                $activate = 0;
+                if ($_POST['activate'] == "on") {
+                    $activate = 1;
+                }
+                $post = new Posts;
+                $post->addPost($author, $title, $chapo, $content, $meta_title, $meta_description, $comment_auth, $activate);
+                header('location:postList');
+            } else {
+                RouterException::errorForm("Vous n'êtes pas authentifié");
             }
-            $activate = 0;
-            if($_POST['activate'] =="on"){
-                $activate = 1;
-            }
-            $post = new Posts;
-            $post->addPost($author, $title,  $chapo,$content,$meta_title,$meta_description,$comment_auth,$activate);
-            header('location:postList');
         }
-        else{
-            RouterException::errorForm("Vous n'êtes pas authentifié");
+        else {
+            RouterException::errorForm("Recaptcha invalidé par google");
         }
     }
 
@@ -424,30 +435,35 @@ class AdminController
      *
      */
     public function updatePageOrPost(){
-        if($_SESSION['adminUser'] == "authentificate"){
-            $id = Tools::secure($_POST['idc']);
-            $title = Tools::secure($_POST['title']);
-            $author = Tools::secure($_SESSION['adminId']);
-            $chapo = Tools::secure($_POST['chapo']);
-            $pageContent = Tools::secure($_POST['content']);
-            $meta_title = Tools::secure($_POST['meta_title']);
-            $meta_description = Tools::secure($_POST['meta_description']);
-            $function = Tools::secure($_POST['function']);
-            $comment_auth = 0;
-            if($_POST['comment_auth'] =="on"){
-                $comment_auth = 1;
-            }
-            $activate = 0;
-            if($_POST['activate'] =="on"){
-                $activate = 1;
-            }
+        if (Tools::isRecaptcha()) {
+            if($_SESSION['adminUser'] == "authentificate"){
+                $id = Tools::secure($_POST['idc']);
+                $title = Tools::secure($_POST['title']);
+                $author = Tools::secure($_SESSION['adminId']);
+                $chapo = Tools::secure($_POST['chapo']);
+                $pageContent = Tools::secure($_POST['content']);
+                $meta_title = Tools::secure($_POST['meta_title']);
+                $meta_description = Tools::secure($_POST['meta_description']);
+                $function = Tools::secure($_POST['function']);
+                $comment_auth = 0;
+                if($_POST['comment_auth'] =="on"){
+                    $comment_auth = 1;
+                }
+                $activate = 0;
+                if($_POST['activate'] =="on"){
+                    $activate = 1;
+                }
 
-            $content = new Content;
-            $content->updateContent( $id, $author, $title, $chapo,$pageContent,$meta_title,$meta_description,$comment_auth,$activate, $function );
-            header('location:formSubmit');
+                $content = new Content;
+                $content->updateContent( $id, $author, $title, $chapo,$pageContent,$meta_title,$meta_description,$comment_auth,$activate, $function );
+                header('location:formSubmit');
+            }
+            else{
+                RouterException::errorForm("Vous n'êtes pas authentifié");
+            }
         }
-        else{
-            RouterException::errorForm("Vous n'êtes pas authentifié");
+        else {
+            RouterException::errorForm("Recaptcha invalidé par google");
         }
     }
 
@@ -470,18 +486,23 @@ class AdminController
      *
      */
     public function updateUser(){
-        if($_SESSION['adminUser'] == "authentificate"){
-            $id = Tools::secure($_POST['idu']);
-            $comment_auth = 0;
-            if($_POST['comment_auth'] =="on"){
-                $comment_auth = 1;
+        if (Tools::isRecaptcha()) {
+            if($_SESSION['adminUser'] == "authentificate"){
+                $id = Tools::secure($_POST['idu']);
+                $comment_auth = 0;
+                if($_POST['comment_auth'] =="on"){
+                    $comment_auth = 1;
+                }
+                $user = new Users;
+                $user->update( $id, $comment_auth);
+               header('location:formSubmit');
             }
-            $user = new Users;
-            $user->update( $id, $comment_auth);
-           header('location:formSubmit');
+            else{
+                RouterException::errorForm("Vous n'êtes pas authentifié");
+            }
         }
-        else{
-            RouterException::errorForm("Vous n'êtes pas authentifié");
+        else {
+            RouterException::errorForm("Recaptcha invalidé par google");
         }
 
     }
@@ -490,40 +511,27 @@ class AdminController
      *
      */
     public function updateComment(){
-        if($_SESSION['adminUser'] == "authentificate"){
-            $id = Tools::secure($_POST['idc']);
-            $comment_auth = 0;
-            if($_POST['comment_auth'] =="on"){
-                $comment_auth = 1;
+        if (Tools::isRecaptcha()) {
+
+            if($_SESSION['adminUser'] == "authentificate"){
+                $id = Tools::secure($_POST['idc']);
+                $comment_auth = 0;
+                if($_POST['comment_auth'] =="on"){
+                    $comment_auth = 1;
+                }
+                $comment = new Comments;
+                $comment->update( $id, $comment_auth);
+                header('location:formSubmit');
             }
-            $comment = new Comments;
-            $comment->update( $id, $comment_auth);
-            header('location:formSubmit');
+            else{
+                RouterException::errorForm("Vous n'êtes pas authentifié");
+            }
         }
-        else{
-            RouterException::errorForm("Vous n'êtes pas authentifié");
+        else {
+            RouterException::errorForm("Recaptcha invalidé par google");
         }
 
     }
-   /* public function updatePost(){
-        if($_SESSION['adminUser'] == "authentificate"){
-            $id = Tools::secure($_POST['id_content']);
-            $title = Tools::secure($_POST['title']);
-            $author = Tools::secure($_SESSION['adminId']);
-            $chapo = Tools::secure($_POST['chapo']);
-            $content = Tools::secure($_POST['content']);
-            $meta_title = Tools::secure($_POST['meta_title']);
-            $meta_description = Tools::secure($_POST['meta_description']);
-            $comment_auth = 0;
-            if($_POST['comment_auth'] =="on"){
-                $comment_auth = 1;
-            }
-            Posts::updatePost( $id, $author, $title, $chapo,$content,$meta_title,$meta_description,$comment_auth);
-            header('location:postList');
-        }
-        else{
-            RouterException::errorForm("Vous n'êtes pas authentifié");
-        }
-    }*/
+
 
 }

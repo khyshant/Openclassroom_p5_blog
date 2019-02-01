@@ -228,4 +228,27 @@ class Tools {
         }
         return false;
     }
+
+    public static function isRecaptcha(){
+        $data = array(
+            'secret' => "6Lc5a40UAAAAAEUtCgF_OyxMpKcu16bIjvbdSmC3",
+            'response' => $_POST['g-recaptcha-response']
+        );
+
+        $verify = curl_init();
+        curl_setopt($verify, CURLOPT_URL, "https://www.google.com/recaptcha/api/siteverify");
+        curl_setopt($verify, CURLOPT_POST, true);
+        curl_setopt($verify, CURLOPT_POSTFIELDS, http_build_query($data));
+        curl_setopt($verify, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($verify, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($verify);
+
+        $response = json_decode($response, true);
+        if(isset($response) && $response['success'] ==true){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 }

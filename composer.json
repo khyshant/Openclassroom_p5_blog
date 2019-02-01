@@ -8,11 +8,13 @@
         }
     ],
     "autoload": {
-        "psr-4" : {"App\\" : "src"}
+        "psr-4" : {"App\\" : "src",
+        }
     },
     "require": {
         "ezyang/htmlpurifier" : "dev-master",
         "summernote/summernote" : "v0.8.8",
+        "google/recaptcha": "^1.2",
         "ext-json" : "*"
     }
 }

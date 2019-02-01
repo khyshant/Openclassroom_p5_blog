@@ -5,7 +5,7 @@
     <title>test css</title>
     <link rel='shortcut icon' href='favicon.ico' type='image/x-icon' />
 <link rel="stylesheet" type="text/css" href="<?php echo htmlentities($basedir) ; ?>public/css/base.css" />
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
 
 
 
@@ -93,7 +93,7 @@
     <h1 class="col-md-12 text-center"><?php echo $title; ?></h1>
     <article id="contenu" class="col-md-12">
         <h2 class="titre_article"> </h2>
-            <form id="test" method="post" action="../updateComment">
+            <form id="update" method="post" action="../updateComment">
 
                 <div class="form-group">
                     <label for="lastname">Commentaire</label>
@@ -113,6 +113,7 @@
                 </div>
                 <input type="hidden" id="idc" name="idc" value="<?php echo $contenu['id']; ?>"/>
                 <button type="submit" id="submit" name="submit" class="btn btn-primary" >Enregistrez vous</button>
+                <div class="g-recaptcha" data-sitekey="6Lc5a40UAAAAALZnQK1jAgrQXZkQmmuUO-dmqf5W"></div>
             </form>
     </article>
 
@@ -195,5 +196,6 @@
         }
     }
   </script>
+
 </body>
 </html>
