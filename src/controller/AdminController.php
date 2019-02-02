@@ -103,7 +103,25 @@ class AdminController
             $contents = new Content;
             $page = $contents->listContent(1);
             if (isset($page[$id])) {
-                $this->page($id);
+                $this->page($id,1);
+            } else {
+                RouterException::routeMatchesName();
+            }
+        }
+    }
+
+    /**
+     * @param $id
+     */
+    public function dispatchPost($id)
+    {
+        if (!isset($_SESSION['adminUser'])) {
+            $this->controlAccess();
+        } else {
+            $contents = new Content;
+            $posts = $contents->listContent(2);
+            if (isset($posts[$id])) {
+                $this->page($id,2);
             } else {
                 RouterException::routeMatchesName();
             }
@@ -197,7 +215,7 @@ class AdminController
     /**
      * @param $id
      */
-    public function page($id){
+    public function page($id,$type_id){
         $display = new Content();
         $tpl = new Template( 'src/view/admin/' );
         print $tpl->render( 'updatePageView', array(
@@ -205,7 +223,7 @@ class AdminController
                 'title' => 'Bienvenue '.$_SESSION['username'],
                 'menu' => $tpl::$adminMenu,
                 'titleSection' => 'Modifier une page',
-                'contenu' => $display->getContentById($id,1),
+                'contenu' => $display->getContentById($id,$type_id),
                 'add_a_page' => 'createPage',
             )
         );

@@ -20,6 +20,8 @@ $router->post('/admin/:page','Admin#dispatch');
 $router->get('/admin/:page','Admin#dispatch');
 $router->post('/admin/page/:id','Admin#dispatchPage');
 $router->get('/admin/page/:id','Admin#dispatchPage');
+$router->post('/admin/post/:id','Admin#dispatchPost');
+$router->get('/admin/post/:id','Admin#dispatchPost');
 $router->post('/admin/user/:id','Admin#dispatchUser');
 $router->get('/admin/user/:id','Admin#dispatchUser');
 $router->post('/admin/comment/:id','Admin#dispatchComment');

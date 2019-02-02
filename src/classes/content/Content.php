@@ -388,12 +388,7 @@ class Content {
     {
         $db = Manager::getinstance();
         $contentList = array();
-        if($type_id==1){
-            $contents = $db->prepare('SELECT * FROM `posts`') ;
-        }
-        else{
             $contents = $db->prepare('SELECT * FROM `posts` WHERE `active` = 1;') ;
-        }
         $contents->fetch(\PDO::FETCH_OBJ);
         $contents->execute();
         foreach($contents as $content){
@@ -442,10 +437,10 @@ class Content {
      * @param $id
      * @return mixed
      */
-    public function getContentById($id,$type)
+    public function getContentById($id,$type_id)
     {
         $contents = new Content;
-        $contents = $contents->listContent($type);
+        $contents = $contents->listContent($type_id);
         return $contents[(int)$id];
     }
 }

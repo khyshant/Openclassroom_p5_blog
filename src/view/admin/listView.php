@@ -110,12 +110,17 @@
                     <ul id="contenu" class="col-12">
                         <?php
                         foreach($contenu as $post){
+                            $type="post";
+                            if($post['type_id']==1){
+                                $type="page";
+                            }
                             $html = '<li class="row pb-5" >';
                             $html .= '<div class="col-12" style=": 1px solid grey">';
                             $html .='<h4 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 "><u>'.$post['title'].'</u></h4>';
                             $html .='<p class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 pb-0">'.$post['chapo'].'</p>';
                             $html .='<span class="pl-3"><u>Modifié le '.$post['date_upd'].' par '.$post['author'].'</u> </span>';
-                            $html .='<a class="pull-right" href="page/'.$post['id'].'" alt="lire"> Lire</a>';
+
+                            $html .='<a class="pull-right" href="'.$type.'/'.$post['id'].'" alt="lire"> Lire</a>';
                             $html .= '</div>';
                             $html .= '<div class="clearfix"</div>';
                             $html .= '<hr/>';
