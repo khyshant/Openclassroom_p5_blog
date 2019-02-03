@@ -191,7 +191,7 @@
             $("#openNav").removeClass("d-none");
         });
 
-        $('#title').summernote(
+        $('#chapo').summernote(
             {
                 enterHtml: 'Saisissez ici votre chapo et mettez le en page',
             }
