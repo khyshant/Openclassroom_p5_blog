@@ -58,7 +58,7 @@ class Posts extends Content {
             $content= "post";
         }
         $contents = new Content;
-        $posts = $contents->listContent(2);
+        $posts = $contents->listContent(2,$viewer);
         $display = "<ul>";
         foreach($posts as $post){
             $display.="<li>

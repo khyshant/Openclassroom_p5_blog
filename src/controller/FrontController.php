@@ -83,7 +83,7 @@ class FrontController{
      */
     public function dispatchPost($id){
             $contents = new Content;
-            $page = $contents->listContent(false);
+            $page = $contents->listContent(2,'front');
 
             if (isset($page[$id])) {
                 $this->post($id);
@@ -259,7 +259,7 @@ class FrontController{
                 'title' => 'Section blog'  ,
                 'menu' => $tpl::$frontMenu,
                 'titleSection' => 'Modifier une page',
-                'contenu' => $display->getContentById($id,2),
+                'contenu' => $display->getContentById($id,2,'front'),
                 'commentaires' => $comments->getCommentByPost($id),
                 'return' => 'post/'.$id,
             )

@@ -101,7 +101,7 @@ class AdminController
             $this->controlAccess();
         } else {
             $contents = new Content;
-            $page = $contents->listContent(1);
+            $page = $contents->listContent(1,'admin');
             if (isset($page[$id])) {
                 $this->page($id,1);
             } else {
@@ -119,7 +119,7 @@ class AdminController
             $this->controlAccess();
         } else {
             $contents = new Content;
-            $posts = $contents->listContent(2);
+            $posts = $contents->listContent(2,'admin');
             if (isset($posts[$id])) {
                 $this->page($id,2);
             } else {
@@ -223,7 +223,7 @@ class AdminController
                 'title' => 'Bienvenue '.$_SESSION['username'],
                 'menu' => $tpl::$adminMenu,
                 'titleSection' => 'Modifier une page',
-                'contenu' => $display->getContentById($id,$type_id),
+                'contenu' => $display->getContentById($id,$type_id,'admin'),
                 'add_a_page' => 'createPage',
             )
         );
@@ -321,7 +321,7 @@ class AdminController
                 'title' => 'listing des billets',
                 'menu' => $tpl::$adminMenu,
                 'titleSection' => 'création de page',
-                'contenu' => $display->displayPostList(),
+                'contenu' => $display->displayPostList('admin'),
                 'add_a_post' => 'createPost',
             )
         );

@@ -50,7 +50,7 @@ class Pages extends Content {
     public function getPageById($id_page)
     {
         $contents = new Content;
-            $pages = $contents->listContent(1);
+            $pages = $contents->listContent(1,'admin');
         return $pages[(int)$id_page];
     }
 
@@ -61,7 +61,7 @@ class Pages extends Content {
     public function getPageByFn($param)
     {
         $contents = new Content;
-        $pages = $contents->listContent(1);
+        $pages = $contents->listContent(1,'front');
         foreach ($pages as $page) {
             if ($page['function'] == $param) {
                 return $page;
@@ -75,7 +75,7 @@ class Pages extends Content {
     public function DisplayPageList()
     {
         $contents = new Content;
-        $pages = $contents->listContent(1);
+        $pages = $contents->listContent(1,'admin');
         $display = "<ul>";
         foreach($pages as $page){
            $display.="<li><a href='page/".$page['id']."' title='".$page['title']."'>".$page['title']."</a></li>";
