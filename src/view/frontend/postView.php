@@ -112,36 +112,50 @@
         ?>
         </div>
         <?php
-            if(!empty($_SESSION['username']) && !empty($_SESSION['adminId'])){
+            $mess='<div class="alert alert-info"> votre compte doit être autorisé avant de pouvoir commenter</div>';
+            if((!empty($_SESSION['username']) || !empty($_SESSION['adminId'])) && isset($_SESSION['comment_auth'])){
+                if($_SESSION['comment_auth']==1){
                 ?>
-                <form id="test" method="post" action="../createComment">
-                    <div class="form-group">
-                        <label for="comment">Commentaire</label>
-                        <textarea class="form-control required" id="comment" name="comment" placeholder=""></textarea>
-                    </div>
-                    <input type="hidden" id="idc" name="idc" value="<?php echo $contenu['id']; ?>"/>
-                    <button type="submit" id="submit" name="submit" class="btn btn-primary" >Commenter</button>
-                </form>
+                    <form id="test" method="post" action="../createComment">
+                        <div class="form-group">
+                            <label for="comment">Commentaire</label>
+                            <textarea class="form-control required" id="comment" name="comment" placeholder=""></textarea>
+                        </div>
+                        <input type="hidden" id="idc" name="idc" value="<?php echo $contenu['id']; ?>"/>
+                        <button type="submit" id="submit" name="submit" class="btn btn-primary" >Commenter</button>
+                    </form>
+
                 <?php
+                }
+                else{
+                    $mess='<div class="alert alert-warning"> votre compte ne peut pas encore commenter</div>';
+                    echo $mess;
+                }
             }
             else{
-                ?>
+                echo $mess;
+                 ?>
+
                 <form id="test" method="post" action="../controlAccess">
 
                     <div class="form-group">
                         <label for="login">Email</label>
-                        <input type="text" class="form-control required" id="login" name="login" placeholder="Email" value="">
+                        <input type="text" class="form-control required" id="login" name="login"
+                               placeholder="Email"
+                               value="">
                     </div>
                     <div class="form-group">
                         <label for="password">Mot de passe</label>
-                        <input type="text" class="form-control required" id="password" name="password" placeholder="pass" value="">
+                        <input type="text" class="form-control required" id="password" name="password"
+                               placeholder="pass" value="">
                     </div>
                     <input type="hidden" id="idc" name="idc" value="<?php echo $contenu['id']; ?>"/>
-                    <button type="submit" id="submit" name="submit" class="btn btn-primary" >Connectez vous pour poster un commentaire</button>
+                    <button type="submit" id="submit" name="submit" class="btn btn-primary">Connectez vous pour
+                        poster un commentaire
+                    </button>
                 </form>
                 <div><a href="../userAccount" title="Créer un compte">Créer un compte</a></div>
                 <?php
-
             }
         ?>
 

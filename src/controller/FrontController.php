@@ -198,11 +198,9 @@ class FrontController{
         $securePwd = Tools::securePwd($_POST['password']);
 
         if($secureDob != false && $securePwd != false){
-            echo 'ici';
             $account = new Users();
             $account->createUser(2,$_POST['firstname'], $_POST['lastname'], $_POST['login'], $secureDob, $securePwd['pwd'], $securePwd['salt']);
         }
-        echo 'ici1';
         $erreur = "";
         if($secureDob == false){
             $erreur.=" - code erreur D100 - OB - ";
@@ -233,9 +231,7 @@ class FrontController{
         $return = $_POST['idc'];
         print_r($_POST);
         if(!empty($_POST)){
-            echo 'ici';
             if(Tools::valideEmail($_POST['login']) == true){
-                echo 'la';
                 if(UsersController::controlAccess($_POST['login'],$_POST['password'])){
                     header('location: post/'.$return);
                 }
