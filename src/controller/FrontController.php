@@ -229,7 +229,6 @@ class FrontController{
 
     public function controlAccess(){
         $return = $_POST['idc'];
-        print_r($_POST);
         if(!empty($_POST)){
             if(Tools::valideEmail($_POST['login']) == true){
                 if(UsersController::controlAccess($_POST['login'],$_POST['password'])){

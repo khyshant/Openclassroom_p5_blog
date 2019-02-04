@@ -335,7 +335,6 @@ class Users {
             $display.="<li><a href='user/".$user['id_user']."' title='Voir'>".$user['lastname']." ".$user['firstname']."</a></li>";
             }
 
-            print_r($param);
             $display .= "</ul>";
         if($param == "list"){
 
