@@ -290,6 +290,7 @@ class Users {
         $users->fetch(\PDO::FETCH_ASSOC);
         foreach($users as $user){
             $_SESSION['username'] = $user['firstname'] .' '.  $user['lastname'];
+            $_SESSION['comment_auth']=$user['comment_auth'];
         }
     }
 

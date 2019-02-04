@@ -25,7 +25,7 @@ class UsersController {
 
         $db = Manager::getinstance();
 
-        $query = $db->prepare('SELECT `id_user`, `firstname`, `lastname`, `uniqId`, `email`, `password`, `role_id` FROM user WHERE email = :login');
+        $query = $db->prepare('SELECT `id_user`, `firstname`, `lastname`, `uniqId`, `email`, `password`, `role_id`, `comment_auth` FROM user WHERE email = :login');
         $query->bindParam(':login', $login, \PDO::PARAM_STR,255);
         $query->execute();
         $result = $query->fetch(\PDO::FETCH_OBJ);
@@ -34,6 +34,7 @@ class UsersController {
             $return = false;
             if (password_verify($password,$result->password)) {
                 $_SESSION['username'] = $result->firstname .' '.  $result->lastname;
+                $_SESSION['comment_auth']=$result->comment_auth;
                 $_SESSION['adminId']= $result->id_user;
                 $_SESSION['roleType']= $result->role_id;
                 if ($result->role_id==1) {
