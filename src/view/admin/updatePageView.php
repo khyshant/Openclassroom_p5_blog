@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="fr">
 <head>
@@ -110,6 +109,24 @@
                 <?php
                     ;}
                 ?>
+                <div class="form-group">
+                    <label for="auteur">auteur</label>
+                    <select id="auteur" name="auteur" class="form-control">
+                        <?php
+
+                            foreach($users as $user){
+                                $selected = '';
+                                if($user['id']==$contenu['author']){
+                                    $selected="selected";
+                                }
+                                echo '<option value="'.$user['id'].'" '.$selected.'>'.$user['lastname'].' '.$user['firstname'].'</option>';
+                            }
+                        ?>
+                    </select>
+                </div>
+                    <textarea class="form-control required" id="chapo" name="chapo" placeholder=""><?php echo $contenu['chapo']; ?></textarea>
+                </div>
+
                 <div class="form-group">
                     <label for="chapo">chapo</label>
                     <textarea class="form-control required" id="chapo" name="chapo" placeholder=""><?php echo $contenu['chapo']; ?></textarea>

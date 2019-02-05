@@ -257,7 +257,7 @@ class Comments {
         $Comments = $Comments->listComment(1);
         $display = "<ul>";
         foreach($Comments as $comment){
-            $display.="<li><a href='comment/".$comment['id']."' title='".$comment['post_id']."'>".$comment['date_add']."</a></li>";
+            $display.="<li><a href='comment/".$comment['id']."' title='".$comment['post_id']."'>".$comment['date_add']." - Article N°".$comment['post_id']." - Commentaire N°".$comment['id']."</a></li>";
         }
         $display .= "</ul>";
         return $display;

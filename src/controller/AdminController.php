@@ -217,6 +217,7 @@ class AdminController
      */
     public function page($id,$type_id){
         $display = new Content();
+        $users = new Users();
         $tpl = new Template( 'src/view/admin/' );
         print $tpl->render( 'updatePageView', array(
                 'basedir' => $_SESSION['basedir'],
@@ -224,6 +225,7 @@ class AdminController
                 'menu' => $tpl::$adminMenu,
                 'titleSection' => 'Modifier une page',
                 'contenu' => $display->getContentById($id,$type_id,'admin'),
+                'users' => $users->DisplayUsersList(),
                 'add_a_page' => 'createPage',
             )
         );
@@ -457,7 +459,7 @@ class AdminController
             if($_SESSION['adminUser'] == "authentificate"){
                 $id = Tools::secure($_POST['idc']);
                 $title = Tools::secure($_POST['title']);
-                $author = Tools::secure($_SESSION['adminId']);
+                $author = Tools::secure($_POST['auteur']);
                 $chapo = Tools::secure($_POST['chapo']);
                 $pageContent = Tools::secure($_POST['content']);
                 $meta_title = Tools::secure($_POST['meta_title']);

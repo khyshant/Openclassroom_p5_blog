@@ -315,7 +315,7 @@ class Users {
      * @param $param
      * @return array|string
      */
-    public function DisplayUsersList($param)
+    public function DisplayUsersList($param = false)
     {
         $db = Manager::getinstance();
         $userList = array();
