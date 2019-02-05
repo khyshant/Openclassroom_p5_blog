@@ -32,16 +32,17 @@ class AdminController
     /**
      * @param $page
      */
-    public function dispatch($page)
+    public function dispatch($page = null)
     {
+        if(!$page){
+            RouterException::routeMatchesName();
+        }
+        else{
         if (!isset($_SESSION['adminUser'])) {
             $this->controlAccess();
         } else {
             switch ($page) {
                 case "home":
-                    $this->showHome();
-                    break;
-                case "":
                     $this->showHome();
                     break;
                 case "formlogin":
@@ -88,6 +89,7 @@ class AdminController
                     break;
                 default:
                     RouterException::routeMatches();
+                }
             }
         }
     }
