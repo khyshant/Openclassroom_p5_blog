@@ -103,6 +103,14 @@
        
         
     </section>
+<footer class="row text-center">
+    <div class="col-md-6 offset-md-6 text-center">
+        <a href="<?php echo $basedir; ?>Mention" alt="Mentions légales">Mentions légales</a>
+        <a target="_blank" href="https://www.linkedin.com/in/anthony-blanchard-a2810781/" alt="linked in">linked in</a>
+        <a target="_blank" href="https://drive.google.com/file/d/1NP92A7W5kxA-U_q9jWI2OdvmuCQ5mkjA/view?usp=sharing" alt="Photo">Photo</a>
+        <a target="_blank" href="https://drive.google.com/file/d/1_Z3esdyz0UirZdS5PjbSnaFDWHzzRiZO/view?usp=sharing" alt="cv">cv</a>
+    </div>
+</footer>
     <button id="openNav" class="d-block"><i class="fa fa-eye"></i></button>
     <button id="closeNav"  class="d-none"><i class="fa fa-eye-slash"></i></button>
     <script>

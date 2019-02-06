@@ -16,8 +16,6 @@ body {
     background-image :url('../image/DSCF6369.jpg');
     background-position: 50% 50%;
     background-size: cover;
-    
-    
 }
 
 
@@ -47,6 +45,7 @@ background-size:120% auto;
     background-color:rgba(0,0,0,0);
     color:#800080;
 }
+
 .pg_item-inner{
     background-color:rgba(0,0,0,0.5);
 }
@@ -57,7 +56,6 @@ background-size:120% auto;
     position : relative;
     left:50%;
     height:100%;
-    
 }
 
 .pg_item-inner{
@@ -228,6 +226,8 @@ pg-item>a{
         display: block;
         text-align: left;
     }
+
+    #openNav, #closeNav{display : none !important}
 }
 
 #scene{
@@ -252,4 +252,18 @@ pg-item>a{
     text-align:justify;
     margin-bottom: 5px;
 
+}
+
+footer div{
+    background-color:#800080;
+    font-weight:bold;
+    margin-bottom:0px;
+    position :relative;
+    bottom:0px;
+}
+
+footer div a {
+    padding : 0.5em;
+    text-decoration:underline;
+    color: #ffffff;
 }
