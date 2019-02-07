@@ -221,7 +221,6 @@ class FrontController{
                 );
             }
             else{
-                echo 'ici';
                 // !!! attention au renvoi ==> voir fonction historic =1 de  michel
                 header('location:home');
             }
