@@ -188,11 +188,6 @@ class AdminController
      *
      */
     public function controlAccess(){
-      /*$securePwd = Tools::securePwd("BLO_a!b_2704");
-       $secureDob = Tools::valideDob('27-04-1977');
-       $test = new Users();
-       $test->createUser(1,'Blanchard', 'Anthony', 'anth.blanchard@gmail.com', '27-07-1977', $securePwd['pwd'], $securePwd['salt']);
-        */
         if(!empty($_POST)) {
             if (Tools::isRecaptcha()) {
                 if (Tools::valideEmail($_POST['login']) == true) {
