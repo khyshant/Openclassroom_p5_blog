@@ -11,7 +11,7 @@
    <title>Titre de la page</title>
    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css">
    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src='https://www.google.com/recaptcha/api.js?render=6LfJw4kUAAAAAEvPggQ8_9AfPXia3_vj1js_vjbv'></script>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
 </head>
 <body>
 <nav  id="myTopnav" class="topnav ">
@@ -101,6 +101,7 @@
                  <label for="Message">Message</label>
                  <textarea type="Message" class="form-control required" id="Message" name="Message" placeholder="" row="4"></textarea>
              </div>
+             <div class="g-recaptcha" data-sitekey="6Lc5a40UAAAAALZnQK1jAgrQXZkQmmuUO-dmqf5W"></div>
              <button type="submit" id="submit" name="submit" class="btn btn-primary" >Enregistrez vous</button>
          </form>
 

@@ -189,40 +189,45 @@ class FrontController{
 
     public function validAccount(){
 
-        /*$securePwd = Tools::securePwd("BLO_a!b_2704");
-               $secureDob = Tools::valideDob('27-04-1977');
-               $test = new Users();
-               $test->createUser(1,'Blanchard', 'Anthony', 'anth.blanchard@gmail.com', '27-07-1977', $securePwd['pwd'], $securePwd['salt']);
-                */
-        $secureDob = Tools::valideDob($_POST['dob']);
-        $securePwd = Tools::securePwd($_POST['password']);
+        if (Tools::isRecaptcha()) {
+            /*$securePwd = Tools::securePwd("BLO_a!b_2704");
+                   $secureDob = Tools::valideDob('27-04-1977');
+                   $test = new Users();
+                   $test->createUser(1,'Blanchard', 'Anthony', 'anth.blanchard@gmail.com', '27-07-1977', $securePwd['pwd'], $securePwd['salt']);
+                    */
+            $secureDob = Tools::valideDob($_POST['dob']);
+            $securePwd = Tools::securePwd($_POST['password']);
 
-        if($secureDob != false && $securePwd != false){
-            $account = new Users();
-            $account->createUser(2,$_POST['firstname'], $_POST['lastname'], $_POST['login'], $secureDob, $securePwd['pwd'], $securePwd['salt']);
+            if($secureDob != false && $securePwd != false){
+                $account = new Users();
+                $account->createUser(2,$_POST['firstname'], $_POST['lastname'], $_POST['login'], $secureDob, $securePwd['pwd'], $securePwd['salt']);
+            }
+            $erreur = "";
+            if($secureDob == false){
+                $erreur.=" - code erreur D100 - OB - ";
+            }
+            if($securePwd == false){
+                $erreur.="code erreur P100 - WD";
+            }
+            if($erreur !=""){
+                $tpl = new Template( 'src/view/frontend/' );
+                print $tpl->render( 'createAccountView', array(
+                    'basedir' => $_SESSION['basedir'],
+                    'title' => 'Vous pouvez créer un compte pour commenter les articles',
+                    'menu' => $tpl::$frontMenu,
+                    'erreur' => 'erreur durant le transfert du formulaire '.$erreur,
+                    'contenu' => 'Cliquez dans la navigation pour choisir ce que vous souhaitez faire',
+                    )
+                );
+            }
+            else{
+                echo 'ici';
+                // !!! attention au renvoi ==> voir fonction historic =1 de  michel
+                header('location:home');
+            }
         }
-        $erreur = "";
-        if($secureDob == false){
-            $erreur.=" - code erreur D100 - OB - ";
-        }
-        if($securePwd == false){
-            $erreur.="code erreur P100 - WD";
-        }
-        if($erreur !=""){
-            $tpl = new Template( 'src/view/frontend/' );
-            print $tpl->render( 'createAccountView', array(
-                'basedir' => $_SESSION['basedir'],
-                'title' => 'Vous pouvez créer un compte pour commenter les articles',
-                'menu' => $tpl::$frontMenu,
-                'erreur' => 'erreur durant le transfert du formulaire '.$erreur,
-                'contenu' => 'Cliquez dans la navigation pour choisir ce que vous souhaitez faire',
-                )
-            );
-        }
-        else{
-            echo 'ici';
-            // !!! attention au renvoi ==> voir fonction historic =1 de  michel
-            header('location:home');
+        else {
+            RouterException::errorForm("Recaptcha invalidé par google");
         }
 
     }
@@ -267,20 +272,25 @@ class FrontController{
     }
 
     public function createComment(){
-        if(!empty($_POST['comment'])){
-            $post_id = Tools::secure($_POST['idc']);
-            $author = Tools::secure($_SESSION['adminId']);
-            $comment = Tools::secure($_POST['comment']);
-            $add = new Comments;
-            if($add->addComment($post_id,$author, $comment)){
-                header('location:formSubmit');
+        if (Tools::isRecaptcha()) {
+            if(!empty($_POST['comment'])){
+                $post_id = Tools::secure($_POST['idc']);
+                $author = Tools::secure($_SESSION['adminId']);
+                $comment = Tools::secure($_POST['comment']);
+                $add = new Comments;
+                if($add->addComment($post_id,$author, $comment)){
+                    header('location:formSubmit');
+                }
+                else{
+                    RouterException::errorForm("Echec de soumission");
+                }
             }
             else{
                 RouterException::errorForm("Echec de soumission");
             }
         }
-        else{
-            RouterException::errorForm("Echec de soumission");
+        else {
+            RouterException::errorForm("Recaptcha invalidé par google");
         }
     }
 

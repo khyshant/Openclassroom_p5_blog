@@ -12,6 +12,7 @@
   <title>Titre de la page</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src='https://www.google.com/recaptcha/api.js'></script>
 </head>
 <body>
 <nav  id="myTopnav" class="topnav ">
@@ -105,6 +106,7 @@
                  <label for="password">Password</label>
                  <input type="password" class="form-control required" id="password" name="password" placeholder="">
              </div>
+             <div class="g-recaptcha" data-sitekey="6Lc5a40UAAAAALZnQK1jAgrQXZkQmmuUO-dmqf5W"></div>
              <button type="submit" id="submit" name="submit" class="btn btn-primary" >Enregistrez vous</button>
          </form>
 
