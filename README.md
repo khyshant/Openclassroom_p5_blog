@@ -22,3 +22,9 @@ Puis utiliser le compte admin créé dan s la base de donnée de démo
 login : anth.blanchard@gmail.com
 
 mdp : BLO_a!b_2704
+
+# Annexes
+
+un fichiers sql contenant une base de test est disponible. Cette base de donnée contient des pages, des post, des commentaire, des auteur, etc.
+
+Un dossier contenant les schéma est disponible
